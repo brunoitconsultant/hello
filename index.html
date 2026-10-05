@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <canvas id="screen" width="640" height="480" style="background:#000;"></canvas>
+
+  <script>
+    const width = 640;
+    const height = 480;
+    const canvas = document.getElementById('screen');
+    const ctx = canvas.getContext('2d');
+    
+    const canvasImage = ctx.createImageData(width, height);
+    let frame = 0;
+
+WebAssembly.instantiateStreaming(fetch('renderer.wasm'))
+  .then(result => {
+    const exports = result.instance.exports;
+    
+    const memory = exports.memory || result.instance.memory; 
+    const bufferPtr = exports.get_buffer_pointer();
+
+    const totalBytes = width * height * 4;
+    const pixelView = new Uint8ClampedArray(memory.buffer, bufferPtr, totalBytes);
+
+    function loop() {
+      exports.generate_frame(frame++);
+
+      canvasImage.data.set(pixelView);
+      ctx.putImageData(canvasImage, 0, 0);
+
+      requestAnimationFrame(loop);
+    }
+
+    loop(); 
+  });
+  </script>
+</body>
+</html>
