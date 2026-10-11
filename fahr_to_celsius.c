@@ -6,7 +6,7 @@ void fahr_to_celsius(int min, int max, int interval){
 
     for(int fahr = min; fahr <= max ; fahr += interval){
         float celsius = (5.0 * (fahr - 32) / 9);
-        printf("%d\t\t>\t%6.1f\n", fahr, celsius);
+        printf("%4d\t\t>\t%6.1f\n", fahr, celsius);
     }
     
     printf("________________________________\n\n");
