@@ -16,7 +16,6 @@ void fahr_to_celsius(int min, int max, int interval){
     printf("________________________________\n\n");
 }
 
-
 int main() {
     fahr_to_celsius(LOWER, UPPER, INTERVAL);   
     return 0;
