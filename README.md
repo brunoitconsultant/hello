@@ -3,4 +3,4 @@
 git clone https://github.com/brunoitconsultant/hello.git ~/hello ; cd ~/hello
 
 ### > COMPILE CODE
-make
+clear ; make -s ; ./fahr_to_celsius
