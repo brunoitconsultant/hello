@@ -43,7 +43,6 @@ void count_words(){
     }
 
     printf("\nChars: %d\nRows: %d\nWords: %d\n", char_count, row_count, word_count);
-    printf("________________________________\n\n");
 }
 
 int main() {
