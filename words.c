@@ -32,7 +32,6 @@ void count_words(){
 // 4. PRINT HISTOGRAM OF FREEQUENCY OF APPEARING CHARS
 
 int main() {
-
     count_words();
     return 0;
 }
