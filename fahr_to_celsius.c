@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+i
 #define LOWER           0
 #define UPPER           360
 #define INTERVAL        20
@@ -37,6 +37,11 @@ void count_words(){
     }
     printf("\nChars: %d\nRows: %d\nWords: %d\n", char_count, row_count, word_count);
 }
+
+// 1. RECEIVE AN INPUT OF TEXT AND COPY EACH WORK TO ARRAYS
+// 2. PRINT THE LONGEST LINE
+// 3. PRINT HISTOGRAM OF LENGH OF WORDS
+// 4. PRINT HISTOGRAM OF FREEQUENCY OF APPEARING CHARS
 
 int main() {
 
