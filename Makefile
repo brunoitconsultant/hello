@@ -1,13 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 
-TARGET = fahr_to_celsius
+TARGETS = fahr_to_celsius words
 
-all: $(TARGET)
+all: $(TARGETS)
 
-$(TARGET): fahr_to_celsius.c
-	$(CC) $(CFLAGS) fahr_to_celsius.c -o $(TARGET)
+fahr_to_celsius: fahr_to_celsius.c
+	$(CC) $(CFLAGS) fahr_to_celsius.c -o fahr_to_celsius
+
+words: words.c
+	$(CC) $(CFLAGS) words.c -o words
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGETS)
 
