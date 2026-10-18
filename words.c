@@ -55,7 +55,6 @@ void text_display(){
 }
 
 void menu_display(){
-
     printf("Select one of the options:\n");
     printf("  %c:\tInsert text\n", MENU_TEXT_INSERT);
     printf("  %c:\tDisplay text\n", MENU_TEXT_DISPLAY);
