@@ -26,10 +26,11 @@ void count_words(){
     printf("\nChars: %d\nRows: %d\nWords: %d\n", char_count, row_count, word_count);
 }
 
-// 1. RECEIVE AN INPUT OF TEXT AND COPY EACH WORK TO ARRAYS
-// 2. PRINT THE LONGEST LINE
-// 3. PRINT HISTOGRAM OF LENGH OF WORDS
-// 4. PRINT HISTOGRAM OF FREEQUENCY OF APPEARING CHARS
+//  > display a menu with several options:
+//      + quit app
+//      + display text in memory
+//      + dispaly stats (nr. lines, nr. words, nr. chars, histogram of workds, tf/idf) about the text in memory
+//      + clear the text in memory and raplace it with another
 
 int main() {
     count_words();
