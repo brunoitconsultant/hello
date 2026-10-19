@@ -16,6 +16,7 @@
 void word_count();
 void menu_display();
 int menu_handler(int c);
+void text_insert();
 void text_display();
 
 //  > display a menu with several options:
@@ -40,7 +41,7 @@ int main() {
 int menu_handler(int c){
 
     if(c == MENU_TEXT_INSERT)
-        printf(" It will save a new input\n");
+        text_insert();
     else if(c == MENU_TEXT_DISPLAY)
         text_display();
     else if (c == MENU_EXIT)
@@ -48,6 +49,10 @@ int menu_handler(int c){
     else
         printf(" %c is an invalid option\n", c);
     return c;
+}
+
+void text_insert(){
+    printf(" It will save a new input\n");
 }
 
 void text_display(){
