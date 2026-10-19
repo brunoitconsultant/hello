@@ -53,6 +53,8 @@ int menu_handler(int c){
 
 void text_insert(){
     printf(" It will save a new input\n");
+    printf('0');
+    printf("\n");
 }
 
 void text_display(){
