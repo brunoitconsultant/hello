@@ -28,6 +28,12 @@ int main() {
 
     menu_display();
 
+
+
+
+
+
+
     int c, i = 0;
     while(i != MENU_EXIT){
         c = getchar();
