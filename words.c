@@ -45,7 +45,7 @@ int menu_handler(int c){
     else if(c == MENU_TEXT_DISPLAY)
         text_display();
     else if (c == MENU_EXIT)
-        printf(" It will exist the program\n");
+        printf(" It will exit the program\n");
     else
         printf(" %c is an invalid option\n", c);
     return c;
