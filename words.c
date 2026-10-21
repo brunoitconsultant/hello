@@ -28,12 +28,16 @@ int main() {
 
     menu_display();
 
+    int content[INPUT_MAXSIZE];
     int c, i = 0;
+
     while(i != MENU_EXIT){
         c = getchar();
         if(c == CHAR_NEWLINE);
-        else
+        else{
             i = menu_handler(c);
+            //printf("content is: %c", content[0]);
+        }
     }
     return 0;
 }
