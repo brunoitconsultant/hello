@@ -1,75 +1,73 @@
 #include <stdio.h>
 
-#define CHAR_a              97
-#define CHAR_z              122
-#define CHAR_A              65
-#define CHAR_Z              90
-#define CHAR_NEWLINE        10
-#define CHAR_SPACE          32
+#define CHAR_a                  97
+#define CHAR_z                  122
+#define CHAR_A                  65
+#define CHAR_Z                  90
+#define CHAR_NEWLINE            10
+#define CHAR_SPACE              32
 
-#define MENU_TEXT_INSERT    49      //ASCII: 1
-#define MENU_TEXT_DISPLAY   56      //ASCII: 8
-#define MENU_EXIT           57      //ASCII: 9
+#define MENU_TEXT_INSERT        49      //ASCII: 1
+#define MENU_TEXT_DISPLAY       56      //ASCII: 8
+#define MENU_EXIT               57      //ASCII: 9
 
-#define INPUT_MAXSIZE       1000
+#define BUFFER_MAXSIZE          1000
 
+void prompt();
+void buffer_save(char buffer[], int terminator);
+void buffer_show();
 void word_count();
-void menu_display();
-int menu_handler(int c);
-void text_insert();
-void text_display();
 
-//  > display a menu with several options:
-//      + display text in memory
-//      + dispaly stats (nr. lines, nr. words, nr. chars, histogram of workds, tf/idf) about the text in memory
-//      + clear the text in memory and raplace it with another
+char buffer[BUFFER_MAXSIZE];
 
 int main() {
 
-    menu_display();
-
-    int content[INPUT_MAXSIZE];
-    int c, i = 0;
-
-    while(i != MENU_EXIT){
-        c = getchar();
-        if(c == CHAR_NEWLINE);
-        else{
-            i = menu_handler(c);
-            //printf("content is: %c", content[0]);
-        }
-    }
+    prompt();
+   
+    if(buffer[0] == CHAR_NEWLINE);
+    else if(buffer[BUFFER_MAXSIZE-1] == 1 && buffer[0] == MENU_TEXT_INSERT){
+        buffer_save(buffer, EOF);
+        buffer_show();
+    }else if(buffer[0] == MENU_TEXT_DISPLAY)
+        buffer_show();
+    else if (buffer[0] == MENU_EXIT)
+        printf("Exiting the program\n");
+    else
+        printf("'%c' is an invalid option.\n", buffer[0]);
+ 
     return 0;
 }
 
-int menu_handler(int c){
-
-    if(c == MENU_TEXT_INSERT)
-        text_insert();
-    else if(c == MENU_TEXT_DISPLAY)
-        text_display();
-    else if (c == MENU_EXIT)
-        printf(" It will exit the program\n");
-    else
-        printf(" %c is an invalid option\n", c);
-    return c;
+void buffer_save(char b[], int t){
+    
+    for(int i = 0; i < BUFFER_MAXSIZE; i++) b[i] = EOF;
+    
+    char c;
+    int len = 0;
+    while((c = getchar()) != t){
+        if(len < BUFFER_MAXSIZE-2){
+            b[len] = c;
+            len++;
+        }
+        b[BUFFER_MAXSIZE-1] = len;
+    }  
 }
 
-void text_insert(){
-    printf(" It will save a new input\n");
-    printf("%d", '0');
-    printf("\n");
+void buffer_show(){
+    int i = 0;
+    while(buffer[i] != EOF){
+        printf("buffer[%d]:\t%c\n", i, buffer[i]);
+        i++;
+    }
 }
 
-void text_display(){
-    printf(" It will display the input\n");
-}
-
-void menu_display(){
+void prompt(){
     printf("Select one of the options:\n");
     printf("  %c:\tInsert text\n", MENU_TEXT_INSERT);
     printf("  %c:\tDisplay text\n", MENU_TEXT_DISPLAY);
     printf("  %c:\tExit the program\n", MENU_EXIT);
+
+    buffer_save(buffer, CHAR_NEWLINE);
 }
 
 void word_count(){
