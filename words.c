@@ -13,7 +13,7 @@
 
 #define BUFFER_MAXSIZE          1000
 
-void prompt();
+void menu();
 void buffer_save(char buffer[], int terminator);
 void buffer_show();
 void word_count();
@@ -22,7 +22,7 @@ char buffer[BUFFER_MAXSIZE];
 
 int main() {
 
-    prompt();
+    menu();
    
     if(buffer[0] == CHAR_NEWLINE);
     else if(buffer[BUFFER_MAXSIZE-1] == 1 && buffer[0] == MENU_TEXT_INSERT){
@@ -61,7 +61,7 @@ void buffer_show(){
     }
 }
 
-void prompt(){
+void menu(){
     printf("Select one of the options:\n");
     printf("  %c:\tInsert text\n", MENU_TEXT_INSERT);
     printf("  %c:\tDisplay text\n", MENU_TEXT_DISPLAY);
