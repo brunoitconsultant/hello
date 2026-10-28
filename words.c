@@ -1,52 +1,52 @@
 #include <stdio.h>
 
-#define CHAR_a                  97
-#define CHAR_z                  122
-#define CHAR_A                  65
-#define CHAR_Z                  90
-#define CHAR_NEWLINE            10
-#define CHAR_SPACE              32
+#define a               97
+#define z               122
+#define A               65
+#define Z               90
+#define NEWLINE         10
+#define SPACE           32
 
-#define MENU_TEXT_INSERT        49      //ASCII: 1
-#define MENU_TEXT_DISPLAY       50      //ASCII: 2
-#define MENU_TEXT_STATS         51      //ASCII: 3
-#define MENU_EXIT               57      //ASCII: 9
+#define TEXT_INSERT     49      //ASCII: 1
+#define TEXT_DISPLAY    50      //ASCII: 2
+#define TEXT_STATS      51      //ASCII: 3
+#define EXIT            57      //ASCII: 9
 
-#define INPUT_MAXSIZE          10000
+#define MAXSIZE         10000
 
 void init();
-void menu();
+char menu();
 void input_show();
 void input_stats();
 void input_save(char bytes[], int max_lenght, int terminator);
 
-char choice[1];
-char input[INPUT_MAXSIZE];
+char choice;
+char input[MAXSIZE];
 
 int main() {
 
     init();
    
-    while(choice[0] != MENU_EXIT){
+    while(choice != EXIT){
 
-        if(choice[0] == CHAR_NEWLINE);
-        else if(choice[0] == MENU_TEXT_INSERT)
-            input_save(input, INPUT_MAXSIZE, EOF);
-        else if(choice[0] == MENU_TEXT_DISPLAY)
+        if(choice == NEWLINE);
+        else if(choice == TEXT_INSERT)
+            input_save(input, MAXSIZE, EOF);
+        else if(choice == TEXT_DISPLAY)
             input_show();
-        else if(choice[0] == MENU_TEXT_STATS)
+        else if(choice == TEXT_STATS)
             input_stats();
         else
-            printf("%c, is an invalid choice\n", choice[0]);
+            printf("%c, is an invalid choice\n", choice);
 
-        menu();
+        choice = menu();
     } 
     return 0;
 }
 
 void init(){
-    for(int i = 0; i < INPUT_MAXSIZE; i++) input[i] = EOF;
-    menu();
+    for(int i = 0; i < MAXSIZE; i++) input[i] = EOF;
+    choice = menu();
 }
 
 void input_save(char bytes[], int max_lenght, int terminator){
@@ -70,13 +70,18 @@ void input_show(){
     }
 }
 
-void menu(){
+char menu(){
     printf("__________________________\nSelect one of the options:\n");
-    printf("  %c.\tInsert text\n", MENU_TEXT_INSERT);
-    printf("  %c.\tDisplay text\n", MENU_TEXT_DISPLAY);
-    printf("  %c.\tCalculate text\n", MENU_TEXT_STATS);
-    printf("  %c.\tExit\n\n\n", MENU_EXIT);
-    input_save(choice, 1, CHAR_NEWLINE);    
+    printf("  %c.\tInsert text\n", TEXT_INSERT);
+    printf("  %c.\tDisplay text\n", TEXT_DISPLAY);
+    printf("  %c.\tCalculate text\n", TEXT_STATS);
+    printf("  %c.\tExit\n\n\n", EXIT);
+
+    char c, b;
+    while((c = getchar()) != '\n')
+        b = c;
+    
+    return b;     
 }
 
 void input_stats(){
@@ -85,11 +90,11 @@ void input_stats(){
     int c = EOF, prev_c;
 
     for(c_cnt = 0; (c = input[c_cnt]) != EOF; c_cnt++){
-        if(c_cnt == 0 || c == CHAR_NEWLINE){
+        if(c_cnt == 0 || c == NEWLINE){
             r_cnt++;
         }
-        if((prev_c >= CHAR_a && prev_c <= CHAR_z) || (prev_c >= CHAR_A && prev_c <= CHAR_Z)){
-            if((c < CHAR_a || c > CHAR_z) || (c < CHAR_A && c > CHAR_Z))
+        if((prev_c >= a && prev_c <= z) || (prev_c >= A && prev_c <= Z)){
+            if((c < a || c > z) || (c < A && c > Z))
                 w_cnt++;
         }
         prev_c = c;
