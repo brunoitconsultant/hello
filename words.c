@@ -40,9 +40,7 @@ int main() {
             printf("%c, is an invalid choice\n", choice[0]);
 
         menu();
-    }
-    
-    printf("Exiting the program\n");
+    } 
     return 0;
 }
 
