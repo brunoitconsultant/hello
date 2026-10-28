@@ -74,8 +74,8 @@ void menu(){
     printf("__________________________\nSelect one of the options:\n");
     printf("  %c:\tInsert text\n", MENU_TEXT_INSERT);
     printf("  %c:\tDisplay text\n", MENU_TEXT_DISPLAY);
-    printf("  %c:\tDisplay stats\n", MENU_TEXT_STATS);
-    printf("  %c:\tExit the program\n", MENU_EXIT);
+    printf("  %c:\tCalculate text\n", MENU_TEXT_STATS);
+    printf("  %c:\tExit\n", MENU_EXIT);
     printf("__________________________\n\n");
     input_save(choice, 1, CHAR_NEWLINE);    
 }
