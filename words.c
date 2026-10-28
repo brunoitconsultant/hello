@@ -1,68 +1,55 @@
 #include <stdio.h>
 
-#define a               97
-#define z               122
-#define A               65
-#define Z               90
-#define NEWLINE         10
-#define SPACE           32
+#define a           97
+#define z           122
+#define A           65
+#define Z           90
+#define NEWLINE     10
+#define SPACE       32
 
-#define TEXT_INSERT     49      //ASCII: 1
-#define TEXT_DISPLAY    50      //ASCII: 2
-#define TEXT_STATS      51      //ASCII: 3
-#define EXIT            57      //ASCII: 9
+#define INSERT      49      //ASCII: 1
+#define DISPLAY     50      //ASCII: 2
+#define STATS       51      //ASCII: 3
+#define EXIT        57      //ASCII: 9
 
-#define MAXSIZE         10000
+#define MAXSIZE     10000
 
-void init();
 char menu();
-void input_show();
-void input_stats();
-void input_save(char bytes[], int max_lenght, int terminator);
+void show();
+void stats();
+void save();
 
 char choice;
 char input[MAXSIZE];
 
 int main() {
 
-    init();
+    for(int i = 0; i < MAXSIZE; i++) input[i] = EOF;
    
-    while(choice != EXIT){
-
-        if(choice == NEWLINE);
-        else if(choice == TEXT_INSERT)
-            input_save(input, MAXSIZE, EOF);
-        else if(choice == TEXT_DISPLAY)
-            input_show();
-        else if(choice == TEXT_STATS)
-            input_stats();
-        else
-            printf("%c, is an invalid choice\n", choice);
-
-        choice = menu();
+    while((choice = menu()) != EXIT){
+        if(choice == NEWLINE)           ;
+        else if(choice == INSERT)  save();
+        else if(choice == DISPLAY) show();
+        else if(choice == STATS)   stats();
+        else                       printf("%c, is an invalid choice\n", choice);
     } 
     return 0;
 }
 
-void init(){
-    for(int i = 0; i < MAXSIZE; i++) input[i] = EOF;
-    choice = menu();
-}
-
-void input_save(char bytes[], int max_lenght, int terminator){
+void save(){
     
-    for(int i = 0; i < max_lenght; i++) bytes[i] = EOF;
+    for(int i = 0; i < MAXSIZE; i++) input[i] = EOF;
     
     char c;
     int i = 0;
-    while((c = getchar()) != terminator){
-        bytes[i] = c;
+    while((c = getchar()) != EOF){
+        input[i] = c;
         i++;
     }
     clearerr(stdin);
 }
 
-void input_show(){
+void show(){
     int i = 0;
     while(input[i] != EOF){
         printf("[%d]:\t%c\n", i, input[i]);
@@ -72,10 +59,10 @@ void input_show(){
 
 char menu(){
     printf("__________________________\nSelect one of the options:\n");
-    printf("  %c.\tInsert text\n", TEXT_INSERT);
-    printf("  %c.\tDisplay text\n", TEXT_DISPLAY);
-    printf("  %c.\tCalculate text\n", TEXT_STATS);
-    printf("  %c.\tExit\n\n\n", EXIT);
+    printf("  %c.\tInsert text\n",      INSERT);
+    printf("  %c.\tDisplay text\n",     DISPLAY);
+    printf("  %c.\tCalculate text\n",   STATS);
+    printf("  %c.\tExit\n\n",           EXIT);
 
     char t, c;
     while((t = getchar()) != '\n')
@@ -84,7 +71,7 @@ char menu(){
     return c;     
 }
 
-void input_stats(){
+void stats(){
 
     int c_cnt = 0, r_cnt = 0, w_cnt = 0;
     int c = EOF, prev_c;
