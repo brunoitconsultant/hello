@@ -14,9 +14,9 @@
 #define BUFFER_MAXSIZE          1000
 
 void menu();
-void buffer_save(char buffer[], int terminator);
 void buffer_show();
-void word_count();
+void buffer_stats(char buffer[]);
+void buffer_save(char buffer[], int terminator);
 
 char buffer[BUFFER_MAXSIZE];
 
@@ -27,9 +27,10 @@ int main() {
     if(buffer[0] == CHAR_NEWLINE);
     else if(buffer[BUFFER_MAXSIZE-1] == 1 && buffer[0] == MENU_TEXT_INSERT){
         buffer_save(buffer, EOF);
-        buffer_show();
     }else if(buffer[0] == MENU_TEXT_DISPLAY)
         buffer_show();
+    }else if(buffer[0] == MENU_TEXT_DISPLAY)
+        buffer_stats(buffer);
     else if (buffer[0] == MENU_EXIT)
         printf("Exiting the program\n");
     else
@@ -70,13 +71,12 @@ void menu(){
     buffer_save(buffer, CHAR_NEWLINE);
 }
 
-void word_count(){
+void buffer_stats(char b[]){
  
-    printf("\nWord counting game, say something:\n");
     int char_count = 0, row_count = 0, word_count = 0, c = EOF;
     int prev_char = EOF;
 
-    for(char_count = 0; ((c = getchar()) != EOF); char_count++){
+    for(char_count = 0; 1000; char_count++){
         if(char_count == 0 || c == CHAR_NEWLINE){
             row_count++;
         }
