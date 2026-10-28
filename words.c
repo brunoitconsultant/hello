@@ -77,15 +77,15 @@ char menu(){
     printf("  %c.\tCalculate text\n", TEXT_STATS);
     printf("  %c.\tExit\n\n\n", EXIT);
 
-    char c, b;
-    while((c = getchar()) != '\n')
-        b = c;
+    char t, c;
+    while((t = getchar()) != '\n')
+        c = t;
     
-    return b;     
+    return c;     
 }
 
 void input_stats(){
- 
+
     int c_cnt = 0, r_cnt = 0, w_cnt = 0;
     int c = EOF, prev_c;
 
