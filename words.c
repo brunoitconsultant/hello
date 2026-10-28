@@ -65,18 +65,17 @@ void input_save(char bytes[], int max_lenght, int terminator){
 void input_show(){
     int i = 0;
     while(input[i] != EOF){
-        printf("buffer[%d]:\t%c\n", i, input[i]);
+        printf("[%d]:\t%c\n", i, input[i]);
         i++;
     }
 }
 
 void menu(){
     printf("__________________________\nSelect one of the options:\n");
-    printf("  %c:\tInsert text\n", MENU_TEXT_INSERT);
-    printf("  %c:\tDisplay text\n", MENU_TEXT_DISPLAY);
-    printf("  %c:\tCalculate text\n", MENU_TEXT_STATS);
-    printf("  %c:\tExit\n", MENU_EXIT);
-    printf("__________________________\n\n");
+    printf("  %c.\tInsert text\n", MENU_TEXT_INSERT);
+    printf("  %c.\tDisplay text\n", MENU_TEXT_DISPLAY);
+    printf("  %c.\tCalculate text\n", MENU_TEXT_STATS);
+    printf("  %c.\tExit\n\n\n", MENU_EXIT);
     input_save(choice, 1, CHAR_NEWLINE);    
 }
 
