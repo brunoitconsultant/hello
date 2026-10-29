@@ -30,7 +30,7 @@ int main() {
 
     while((choice = menu()) != _EXIT){
         if(choice           == _NEWLINE)    ;
-        else if(choice      == _INSERT){    clear(); save(); }
+        else if(choice      == _INSERT)     { clear(); save(); }
         else if(choice      == _DISPLAY)    show();
         else if(choice      == _STATS)      stats();
         else                                printf("%c, is an invalid choice\n", choice);
