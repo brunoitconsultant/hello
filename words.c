@@ -70,8 +70,7 @@ char menu(){
     char t, c;
     while((t = getchar()) != '\n')
         c = t;
-    
-    return c;     
+    return c; 
 }
 
 void stats(){
