@@ -6,6 +6,7 @@
 #define _Z          90
 #define _NEWLINE    10
 #define _SPACE      32
+#define _NULL       '\0'
 
 #define _INSERT     49      //ASCII: 1
 #define _DISPLAY    50      //ASCII: 2
@@ -38,7 +39,7 @@ int main() {
 }
 
 void clear(){
-    for(int i = 0; i < _MAXSIZE; i++) input[i] = EOF;
+    for(int i = 0; i < _MAXSIZE; i++) input[i] = _NULL;
 }
 
 void save(){    
@@ -53,7 +54,7 @@ void save(){
 
 void show(){
     int i = 0;
-    while(input[i] != EOF){
+    while(input[i] != _NULL){
         printf("[%d]:\t%c\n", i, input[i]);
         i++;
     }
@@ -76,9 +77,9 @@ char menu(){
 void stats(){
 
     int c_cnt = 0, r_cnt = 0, w_cnt = 0;
-    int c = EOF, prev_c;
+    int c = _NULL, prev_c;
 
-    for(c_cnt = 0; (c = input[c_cnt]) != EOF; c_cnt++){
+    for(c_cnt = 0; (c = input[c_cnt]) != _NULL; c_cnt++){
         if(c_cnt == 0 || c == _NEWLINE){
             r_cnt++;
         }
