@@ -28,7 +28,6 @@ char menu(){
 }
 
 int main() {
-
     while      ((choice = menu())   != EXIT){
         if     (choice              == '\n')    ;
         else if(choice              == INSERT)  save();
@@ -59,7 +58,6 @@ void show(){
 }
 
 void stats(){
-
     int rows = 1, words = 0, chars;
     int chr = '\0', prev;
 
