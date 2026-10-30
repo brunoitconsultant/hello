@@ -6,30 +6,23 @@
 #define DISPLAY     51      //ASCII: 3
 #define EXIT        57      //ASCII: 9
 
-char menu();
-void show();
-void stats();
-void save();
 void clear();
-
 char choice;
 char input[MAXSIZE];
 
-int main() {
- 
-    clear();
+char menu(){
+    printf(" |----------------------------|\n");
+    printf(" | Select one of the options: |\n");
+    printf(" |  %c.\tInsert                |\n",   INSERT);
+    printf(" |  %c.\tStats                 |\n",    STATS);
+    printf(" |  %c.\tDisplay               |\n",  DISPLAY);
+    printf(" |  %c.\tExit                  |\n",     EXIT);
+    printf(" |----------------------------|\n ");
 
-    while      ((choice = menu())   != EXIT){
-        if     (choice              == '\n')    ;
-        else if(choice              == INSERT)  { clear(); save(); }
-        else if(choice              == DISPLAY) show();
-        else if(choice              == STATS)   stats();
-        else                                    printf(" \"%c\", is an invalid choice\n", choice);
-    } 
-    return 0;
+    char t, c;
+    while((t = getchar()) != '\n') c = t;
+    return c; 
 }
-
-void clear(){ for(int i = 0; i < MAXSIZE; i++) input[i] = '\0'; }
 
 void save(){    
     char c;
@@ -49,20 +42,6 @@ void show(){
     }
 }
 
-char menu(){
-    printf(" |----------------------------|\n");
-    printf(" | Select one of the options: |\n");
-    printf(" |  %c.\tInsert                |\n",   INSERT);
-    printf(" |  %c.\tStats                 |\n",    STATS);
-    printf(" |  %c.\tDisplay               |\n",  DISPLAY);
-    printf(" |  %c.\tExit                  |\n",     EXIT);
-    printf(" |----------------------------|\n ");
-
-    char t, c;
-    while((t = getchar()) != '\n') c = t;
-    return c; 
-}
-
 void stats(){
 
     int rows = 1, words = 0, chars;
@@ -76,3 +55,18 @@ void stats(){
     }
     printf("\nChars: %d\nRows: %d\nWords: %d\n", chars, rows, words);
 }
+
+int main() {
+    clear();
+
+    while      ((choice = menu())   != EXIT){
+        if     (choice              == '\n')    ;
+        else if(choice              == INSERT)  { clear(); save(); }
+        else if(choice              == DISPLAY) show();
+        else if(choice              == STATS)   stats();
+        else                                    printf(" \"%c\", is an invalid choice\n", choice);
+    } 
+    return 0;
+}
+
+void clear(){ for(int i = 0; i < MAXSIZE; i++) input[i] = '\0'; }
