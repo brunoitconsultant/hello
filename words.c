@@ -1,11 +1,10 @@
 #include <stdio.h>
 
+#define MAXSIZE     10000
 #define INSERT      49      //ASCII: 1
 #define STATS       50      //ASCII: 2
 #define DISPLAY     51      //ASCII: 3
 #define EXIT        57      //ASCII: 9
-
-#define MAXSIZE     10000
 
 char menu();
 void show();
