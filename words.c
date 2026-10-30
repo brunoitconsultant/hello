@@ -25,7 +25,7 @@ int main() {
         else if(choice      == INSERT)  { clear(); save(); }
         else if(choice      == DISPLAY) show();
         else if(choice      == STATS)   stats();
-        else                            printf("%c, is an invalid choice\n", choice);
+        else                            printf(" \"%c\", is an invalid choice\n", choice);
     } 
     return 0;
 }
@@ -53,11 +53,13 @@ void show(){
 }
 
 char menu(){
-    printf("__________________________\nSelect one of the options:\n");
-    printf("  %c.\tInsert\n",      INSERT);
-    printf("  %c.\tCalculate\n",   STATS);
-    printf("  %c.\tDisplay\n",     DISPLAY);
-    printf("  %c.\tExit\n",        EXIT);
+    printf(" |----------------------------|\n");
+    printf(" | Select one of the options: |\n");
+    printf(" |  %c.\tInsert                |\n",   INSERT);
+    printf(" |  %c.\tStats                 |\n",    STATS);
+    printf(" |  %c.\tDisplay               |\n",  DISPLAY);
+    printf(" |  %c.\tExit                  |\n",     EXIT);
+    printf(" |----------------------------|\n ");
 
     char t, c;
     while((t = getchar()) != '\n') c = t;
