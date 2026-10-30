@@ -20,19 +20,17 @@ int main() {
  
     clear();
 
-    while((choice = menu()) != EXIT){
-        if     (choice      == '\n')    ;
-        else if(choice      == INSERT)  { clear(); save(); }
-        else if(choice      == DISPLAY) show();
-        else if(choice      == STATS)   stats();
-        else                            printf(" \"%c\", is an invalid choice\n", choice);
+    while      ((choice = menu())   != EXIT){
+        if     (choice              == '\n')    ;
+        else if(choice              == INSERT)  { clear(); save(); }
+        else if(choice              == DISPLAY) show();
+        else if(choice              == STATS)   stats();
+        else                                    printf(" \"%c\", is an invalid choice\n", choice);
     } 
     return 0;
 }
 
-void clear(){
-    for(int i = 0; i < MAXSIZE; i++) input[i] = '\0';
-}
+void clear(){ for(int i = 0; i < MAXSIZE; i++) input[i] = '\0'; }
 
 void save(){    
     char c;
