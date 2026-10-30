@@ -1,14 +1,17 @@
 #include <stdio.h>
+#include <limits.h>
 
-#define MAXSIZE     10000
-#define INSERT      49      //ASCII: 1
-#define STATS       50      //ASCII: 2
-#define DISPLAY     51      //ASCII: 3
-#define EXIT        57      //ASCII: 9
+#define MAXSIZE     UINT_MAX    //4,294,967,295
+#define INSERT      49          //ASCII: 1
+#define STATS       50          //ASCII: 2
+#define DISPLAY     51          //ASCII: 3
+#define EXIT        57          //ASCII: 9
 
-void clear();
+void save();
+void show();
+void stats();
 char choice;
-char input[MAXSIZE];
+char input[MAXSIZE] = {'\0'};
 
 char menu(){
     printf(" |----------------------------|\n");
@@ -24,6 +27,18 @@ char menu(){
     return c; 
 }
 
+int main() {
+
+    while      ((choice = menu())   != EXIT){
+        if     (choice              == '\n')    ;
+        else if(choice              == INSERT)  save();
+        else if(choice              == DISPLAY) show();
+        else if(choice              == STATS)   stats();
+        else                                    printf(" \"%c\", is an invalid choice\n", choice);
+    } 
+    return 0;
+}
+
 void save(){    
     char c;
     int i = 0;
@@ -31,6 +46,7 @@ void save(){
         input[i] = c;
         i++;
     }
+    input[i] = '\0';
     clearerr(stdin);
 }
 
@@ -55,18 +71,3 @@ void stats(){
     }
     printf("\nChars: %d\nRows: %d\nWords: %d\n", chars, rows, words);
 }
-
-int main() {
-    clear();
-
-    while      ((choice = menu())   != EXIT){
-        if     (choice              == '\n')    ;
-        else if(choice              == INSERT)  { clear(); save(); }
-        else if(choice              == DISPLAY) show();
-        else if(choice              == STATS)   stats();
-        else                                    printf(" \"%c\", is an invalid choice\n", choice);
-    } 
-    return 0;
-}
-
-void clear(){ for(int i = 0; i < MAXSIZE; i++) input[i] = '\0'; }
