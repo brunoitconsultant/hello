@@ -21,7 +21,7 @@ int main() {
     clear();
 
     while((choice = menu()) != EXIT){
-        if(choice           == '\n')    ;
+        if     (choice      == '\n')    ;
         else if(choice      == INSERT)  { clear(); save(); }
         else if(choice      == DISPLAY) show();
         else if(choice      == STATS)   stats();
