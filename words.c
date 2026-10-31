@@ -1,66 +1,70 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAXSIZE     UINT_MAX    //4,294,967,295
+#define MAXSIZE     UINT_MAX
 
 void save();
 void show();
 void stats();
 
-enum choices { INSERT, STATS, DISPLAY, EXIT = 9 };
-char choice;
-char input[MAXSIZE] = {'\0'};
+enum choices { INSERT = '1', STATS = '2', DISPLAY = '3', EXIT = (9 + '0') };
+static char choice;
+static const char TERMINATOR = '\0', ENTER = '\n';
+static char input[MAXSIZE] = { TERMINATOR };
 
-char menu(){
-    printf(" |----------------------------|\n");
+void menu(){
+    printf("%s", " |----------------------------|" "\n");
     printf(" | Select one of the options: |\n");
-    printf(" |  %d.\tInsert                |\n",    INSERT);
-    printf(" |  %d.\tStats                 |\n",    STATS);
-    printf(" |  %d.\tDisplay               |\n",    DISPLAY);
-    printf(" |  %d.\tExit                  |\n",    EXIT);
+    printf(" |  %c.\tInsert                |\n",    INSERT);
+    printf(" |  %c.\tStats                 |\n",    STATS);
+    printf(" |  %c.\tDisplay               |\n",    DISPLAY);
+    printf(" |  %c.\tExit                  |\n",    EXIT);
     printf(" |----------------------------|\n ");
 
-    char t, c;
-    while((t = getchar()) != '\n') c = t;
-    return c; 
+    char t;
+    extern char choice;
+    while((t = getchar()) != '\n') choice = t;
 }
 
 int main() {
-    while      ((choice = menu() - '0')   != EXIT){
-        if     (choice              == '\n')    ;
-        else if(choice              == INSERT)  save();
-        else if(choice              == DISPLAY) show();
-        else if(choice              == STATS)   stats();
-        else                                    printf(" \"%d\", is an invalid choice\n", choice);
+    extern char choice;
+    while(1){
+        menu();
+        if      (choice              == EXIT)       break;
+        else if (choice              == ENTER)      ;
+        else if (choice              == INSERT)     save();
+        else if (choice              == DISPLAY)    show();
+        else if (choice              == STATS)      stats();
+        else                                        printf(" \"%c\", is an invalid choice\n", choice);
     } 
     return 0;
 }
 
 void save(){    
     char c;
-    int i = 0;
+    unsigned int i = 0;
     while((c = getchar()) != EOF){
         input[i] = c;
         i++;
     }
-    input[i] = '\0';
+    input[i] = TERMINATOR;
     clearerr(stdin);
 }
 
 void show(){
-    int i = 0;
-    while(input[i] != '\0'){
+    unsigned int i = 0;
+    while(input[i] != TERMINATOR){
         printf("[%d]:\t%c\n", i, input[i]);
         i++;
     }
 }
 
 void stats(){
-    int rows = 1, words = 0, chars;
-    int chr = '\0', prev;
+    unsigned int rows = 1, words = 0, chars;
+    char chr = TERMINATOR, prev;
 
-    for(chars = 0; (chr = input[chars]) != '\0'; chars++){
-        if(chr == '\n') rows++;
+    for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
+        if(chr == TERMINATOR) rows++;
         if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
