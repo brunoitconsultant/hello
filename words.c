@@ -31,7 +31,7 @@ int main() {
     while(1){
         menu();
         if      (choice              == EXIT)       break;
-        else if (choice              == ENTER)      ;
+        //else if (choice              == ENTER)      ;
         else if (choice              == INSERT)     save();
         else if (choice              == DISPLAY)    show();
         else if (choice              == STATS)      stats();
