@@ -3,19 +3,20 @@
 
 #define MAXSIZE     UINT_MAX
 
-void save();
+void write(char method);
 void show();
 void stats();
 
-enum choices { INSERT = '1', STATS = '2', DISPLAY = '3', EXIT = (9 + '0') };
+enum choices { INSERT = '1', APPEND = '2', STATS = '3', DISPLAY = '4', EXIT = '9' };
 static char choice;
-static const char TERMINATOR = '\0', ENTER = '\n';
+static const char TERMINATOR = '\0';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
     printf("%s", " |----------------------------|" "\n");
     printf(" | Select one of the options: |\n");
-    printf(" |  %c.\tInsert                |\n",    INSERT);
+    printf(" |  %c.\tNew text              |\n",    INSERT);
+    printf(" |  %c.\tAppend to text        |\n",    APPEND);
     printf(" |  %c.\tStats                 |\n",    STATS);
     printf(" |  %c.\tDisplay               |\n",    DISPLAY);
     printf(" |  %c.\tExit                  |\n",    EXIT);
@@ -31,8 +32,8 @@ int main() {
     while(1){
         menu();
         if      (choice              == EXIT)       break;
-        //else if (choice              == ENTER)      ;
-        else if (choice              == INSERT)     save();
+        else if (choice              == INSERT)     write(choice);
+        else if (choice              == APPEND)     write(choice);
         else if (choice              == DISPLAY)    show();
         else if (choice              == STATS)      stats();
         else                                        printf(" \"%c\", is an invalid choice\n", choice);
@@ -40,9 +41,21 @@ int main() {
     return 0;
 }
 
-void save(){    
+void write(char method){
     char c;
-    unsigned int i = 0;
+    unsigned int i;
+   
+    if      (method == INSERT) { i = 0; }
+    else if (method == APPEND) {
+        for(unsigned int b = 0; b < MAXSIZE; b++){
+            if(input[b] == TERMINATOR){
+                i = b;
+                break;          
+            }
+        }
+    }
+    else { printf(" \"%d\", is an invalid write method\n", method); return; }
+
     while((c = getchar()) != EOF){
         input[i] = c;
         i++;
