@@ -45,16 +45,9 @@ void write(char method){
     char c;
     unsigned int i;
    
-    if      (method == INSERT) { i = 0; }
-    else if (method == APPEND) {
-        for(unsigned int b = 0; b < MAXSIZE; b++){
-            if(input[b] == TERMINATOR){
-                i = b;
-                break;          
-            }
-        }
-    }
-    else { printf(" \"%d\", is an invalid write method\n", method); return; }
+    if      (method == INSERT)  i = 0;
+    else if (method == APPEND)  for(unsigned int b = 0; b < MAXSIZE && input[b] != TERMINATOR; b++) i = b + 1;
+    else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
         input[i] = c;
@@ -66,7 +59,7 @@ void write(char method){
 
 void show(){
     unsigned int i = 0;
-    while(input[i] != TERMINATOR){
+    while(input[i] != TERMINATOR && i < 100){
         printf("[%d]:\t%c\n", i, input[i]);
         i++;
     }
