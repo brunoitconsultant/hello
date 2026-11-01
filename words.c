@@ -31,14 +31,13 @@ int main() {
     extern char choice;
     while(1){
         menu();
-        if      (choice              == EXIT)       break;
+        if      (choice              == EXIT)       return 0;
         else if (choice              == INSERT)     write(choice);
         else if (choice              == APPEND)     write(choice);
         else if (choice              == DISPLAY)    show();
         else if (choice              == STATS)      stats();
         else                                        printf(" \"%c\", is an invalid choice\n", choice);
     } 
-    return 0;
 }
 
 void write(char method){
