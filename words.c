@@ -15,12 +15,12 @@ static char input[MAXSIZE] = { TERMINATOR };
 void menu(){
     printf("%s", " |----------------------------|" "\n");
     printf(" | Select one of the options: |\n");
-    printf(" |  %c.\tNew text              |\n",    INSERT);
-    printf(" |  %c.\tAppend to text        |\n",    APPEND);
-    printf(" |  %c.\tStats                 |\n",    STATS);
-    printf(" |  %c.\tDisplay               |\n",    DISPLAY);
-    printf(" |  %c.\tExit                  |\n",    EXIT);
-    printf(" |----------------------------|\n ");
+    printf(" |  %c.\tNew text              |\n",    INSERT  );
+    printf(" |  %c.\tAppend to text        |\n",    APPEND  );
+    printf(" |  %c.\tStats                 |\n",    STATS   );
+    printf(" |  %c.\tDisplay               |\n",    DISPLAY );
+    printf(" |  %c.\tExit                  |\n",    EXIT    );
+    printf(" |----------------------------|\n "             );
 
     char t;
     extern char choice;
