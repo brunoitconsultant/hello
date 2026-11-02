@@ -14,7 +14,8 @@ static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
     printf("%s", " +----------------------------+" "\n");
-    printf(" | Select one of the options  |\n +----------------------------+\n");
+    printf(" | Select one of the options  |\n");
+    printf(" +----------------------------+\n");
     printf(" |  %c.\tNew text              |\n",    INSERT  );
     printf(" |  %c.\tAppend to text        |\n",    APPEND  );
     printf(" |  %c.\tStats                 |\n",    STATS   );
