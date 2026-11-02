@@ -20,7 +20,7 @@ void menu(){
     printf(" |  %c.\tStats                 |\n",    STATS   );
     printf(" |  %c.\tDisplay               |\n",    DISPLAY );
     printf(" |  %c.\tExit                  |\n",    EXIT    );
-    printf(" +----------------------------+\n\n "             );
+    printf(" +----------------------------+\n\n"            );
 
     char t;
     extern char choice;
