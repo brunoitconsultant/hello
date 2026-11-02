@@ -9,7 +9,7 @@ void stats();
 
 enum choices { INSERT = '1', APPEND = '2', STATS = '3', DISPLAY = '4', EXIT = '9' };
 static char choice;
-static const char TERMINATOR = '\0';
+static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
@@ -59,7 +59,7 @@ void write(char method){
 void show(){
     unsigned int i = 0;
     while(input[i] != TERMINATOR && i < 100){
-        printf("[%d]:\t%c\n", i, input[i]);
+        printf("[%-10s%d] | %-10p | %-4d | %s\n", "", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5" : (char[]){input[i], TERMINATOR}));
         i++;
     }
 }
