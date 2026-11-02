@@ -74,7 +74,7 @@ void stats(){
     char chr = TERMINATOR, prev;
 
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
-        if(chr == TERMINATOR) rows++;
+        if(chr == NEWLINE) rows++;
         if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
