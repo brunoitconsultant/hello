@@ -13,14 +13,14 @@ static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
-    printf("%s", " |----------------------------|" "\n");
-    printf(" | Select one of the options: |\n");
+    printf("%s", " +----------------------------+" "\n");
+    printf(" | Select one of the options  |\n +----------------------------+\n");
     printf(" |  %c.\tNew text              |\n",    INSERT  );
     printf(" |  %c.\tAppend to text        |\n",    APPEND  );
     printf(" |  %c.\tStats                 |\n",    STATS   );
     printf(" |  %c.\tDisplay               |\n",    DISPLAY );
     printf(" |  %c.\tExit                  |\n",    EXIT    );
-    printf(" |----------------------------|\n "             );
+    printf(" +----------------------------+\n\n "             );
 
     char t;
     extern char choice;
@@ -36,7 +36,7 @@ int main() {
         else if (choice              == APPEND)     write(choice);
         else if (choice              == DISPLAY)    show();
         else if (choice              == STATS)      stats();
-        else                                        printf(" \"%c\", is an invalid choice\n", choice);
+        else                                        printf(" \"%c\" is an invalid option\n", choice);
     } 
 }
 
@@ -58,10 +58,12 @@ void write(char method){
 
 void show(){
     unsigned int i = 0;
+    printf(" +-------------+----------------+------+-------+\n | array[n]    | address        | char | value |\n +-------------+----------------+------+-------+\n");
     while(input[i] != TERMINATOR && i < 100){
-        printf("[%-10s%d] | %-10p | %-4d | %s\n", "", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5" : (char[]){input[i], TERMINATOR}));
+        printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
         i++;
     }
+    printf(" +-------------+----------------+------+-------+\n\n");
 }
 
 void stats(){
@@ -74,5 +76,5 @@ void stats(){
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
     }
-    printf("\nChars: %d\nRows: %d\nWords: %d\n", chars, rows, words);
+    printf("\n Chars: %d\n Rows: %d\n Words: %d\n\n", chars, rows, words);
 }
