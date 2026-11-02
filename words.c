@@ -59,7 +59,9 @@ void write(char method){
 
 void show(){
     unsigned int i = 0;
-    printf(" +-------------+----------------+------+-------+\n | array[n]    | address        | char | value |\n +-------------+----------------+------+-------+\n");
+    printf(" +-------------+----------------+------+-------+\n");
+    printf(" | array[n]    | address        | char | value |\n");
+    printf(" +-------------+----------------+------+-------+\n");
     while(input[i] != TERMINATOR && i < 100){
         printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
         i++;
