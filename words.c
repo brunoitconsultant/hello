@@ -62,8 +62,12 @@ void show(){
     printf(" +-------------+----------------+------+-------+\n");
     printf(" | array[n]    | address        | char | value |\n");
     printf(" +-------------+----------------+------+-------+\n");
-    while(input[i] != TERMINATOR && i < 100){
+    /*while(input[i] != TERMINATOR && i < 10){
         printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
+        i++;
+    }*/
+    while(input[i] != TERMINATOR && i < 10){
+        printf(" |[%10d] | %-10p | %-6s|\n", i, (void*)&input[i], input[i]);
         i++;
     }
     printf(" +-------------+----------------+------+-------+\n\n");
