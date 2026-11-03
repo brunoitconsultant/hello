@@ -62,9 +62,14 @@ void show(){
     printf(" +-------------+----------------+------+-------+\n");
     printf(" | array[n]    | address        | char | value |\n");
     printf(" +-------------+----------------+------+-------+\n");
-    while(input[i] != TERMINATOR && i < 10){
-        printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
-        i++;
+    
+    //bool read = true;
+    while(input[i] != TERMINATOR /*&& read*/){
+        //for(unsigned short p = 0; p < 20; p++){
+            printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
+            i++;
+        /*}
+        read = false;*/
     }
     printf(" +-------------+----------------+------+-------+\n\n");
 }
