@@ -90,7 +90,6 @@ void stats(){
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
     }
-    printf(" | Chars: %-36d |\n"
-       " | Rows:  %-36d |\n" " | Words: %-36d |\n", chars, rows, words);
+    printf(" | Chars: %-36d |\n" " | Rows:  %-36d |\n" " | Words: %-36d |\n", chars, rows, words);
     printf(" +---------------------------------------------+\n\n");
 }
