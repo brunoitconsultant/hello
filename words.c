@@ -14,15 +14,15 @@ static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
-    printf("%s", " +---------------------------------------------+" "\n");
-    printf(" | Select one of the options                   |\n");
-    printf(" +---------------------------------------------+\n");
-    printf(" |  %c.\tNew text                               |\n",    INSERT  );
-    printf(" |  %c.\tAppend to text                         |\n",    APPEND  );
-    printf(" |  %c.\tStats                                  |\n",    STATS   );
-    printf(" |  %c.\tDisplay                                |\n",    DISPLAY );
-    printf(" |  %c.\tExit                                   |\n",    EXIT    );
-    printf(" +---------------------------------------------+\n\n"            );
+    printf("%s", " \033[44m\033[37m+---------------------------------------------+\033[0m" "\n");
+    printf(" \033[44m\033[37m| Select one of the options                   \033[0m|\n");
+    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n");
+    printf(" \033[44m\033[37m|  %c.\tNew text                               \033[0m|\n",    INSERT  );
+    printf(" \033[44m\033[37m|  %c.\tAppend to text                         \033[0m|\n",    APPEND  );
+    printf(" \033[44m\033[37m|  %c.\tStats                                  \033[0m|\n",    STATS   );
+    printf(" \033[44m\033[37m|  %c.\tDisplay                                \033[0m|\n",    DISPLAY );
+    printf(" \033[44m\033[37m|  %c.\tExit                                   \033[0m|\n",    EXIT    );
+    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n\n"            );
 
     char t;
     extern char choice;
