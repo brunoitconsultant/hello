@@ -14,6 +14,8 @@ static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
+    char t;
+    extern char choice;
     printf("%s", " \033[44m\033[37m+---------------------------------------------+\033[0m" "\n"     );
     printf(" \033[44m\033[37m| Select one of the options                   |\033[0m\n"              );
     printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n"              );
@@ -23,8 +25,6 @@ void menu(){
     printf(" \033[44m\033[37m|  %c. Display                                 |\033[0m\n",    DISPLAY );
     printf(" \033[44m\033[37m|  %c  Exit                                    |\033[0m\n",    EXIT    );
     printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n\n"            );
-    char t;
-    extern char choice;
     while((t = getchar()) != NEWLINE) { choice = t; printf("\033[1A\r\033[K"); }
 }
 
@@ -46,7 +46,7 @@ void write(char method){
     unsigned int i;
    
     if      (method == INSERT)  i = 0;
-    else if (method == APPEND)  for(unsigned int b = 0; b < MAXSIZE && input[b] != TERMINATOR; b++) i = b + 1;
+    else if (method == APPEND)  for(unsigned int b = 0; b < MAXSIZE && input[b] != TERMINATOR; b++) i = b++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
