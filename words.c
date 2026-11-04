@@ -2,6 +2,7 @@
 #include <limits.h>
 
 #define MAXSIZE     UINT_MAX
+#define PAGESIZE    50 
 
 void write(char method);
 void show();
@@ -58,19 +59,24 @@ void write(char method){
 }
 
 void show(){
-    unsigned int i = 0;
+    unsigned int i, page = 1;
     printf(" +-------------+----------------+------+-------+\n");
     printf(" | array[n]    | address        | char | value |\n");
-    printf(" +-------------+----------------+------+-------+\n");
-    
-    //bool read = true;
-    while(input[i] != TERMINATOR /*&& read*/){
-        //for(unsigned short p = 0; p < 20; p++){
-            printf(" |[%10d] | %-10p | %-4d | %-6s|\n", i, (void*)&input[i], input[i], (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){input[i], TERMINATOR}));
-            i++;
-        /*}
-        read = false;*/
-    }
+    printf(" +-------------+----------------+------+-------+\n");    
+    for(i = 0; i < (page * PAGESIZE) && input[i] != TERMINATOR; i++){      
+        printf(" |[%10d] | %-10p | %-4d | %-6s|"
+            , i
+            , (void*)&input[i]
+            , input[i]
+            , (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){ input[i], TERMINATOR }
+            )
+        );
+        if(i == (page * PAGESIZE) - 1){ 
+            printf(" + for more.. ");
+            unsigned char t;
+            while((t = getchar()) != NEWLINE) if (t == '+') { page++; printf("\r\033[1A\033[49G\033[K\033[1B\r"); }else{ break; }
+        }else{ printf("\n"); }
+   }    
     printf(" +-------------+----------------+------+-------+\n\n");
 }
 
