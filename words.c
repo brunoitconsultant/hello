@@ -73,7 +73,7 @@ void show(){
             printf(" + for more.. ");
             unsigned char t;
             while((t = getchar()) != NEWLINE) if(t == '+'){ page++; printf("\r\033[1A\033[49G\033[K\033[1B\r");} else break;
-    i    }else{ printf("\n"); }
+        }else printf("\n");
     }    
     printf(" +-------------+----------------+------+-------+\n\n");
 }
