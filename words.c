@@ -91,7 +91,6 @@ void stats(){
         prev = chr;
     }
     printf(" | Chars: %-36d |\n"
-       " | Rows:  %-36d |\n" // Added an extra space after the colon
-       " | Words: %-36d |\n", chars, rows, words);
+       " | Rows:  %-36d |\n" " | Words: %-36d |\n", chars, rows, words);
     printf(" +---------------------------------------------+\n\n");
 }
