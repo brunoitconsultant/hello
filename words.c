@@ -14,16 +14,15 @@ static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
 
 void menu(){
-    printf("%s", " \033[44m\033[37m+---------------------------------------------+\033[0m" "\n");
-    printf(" \033[44m\033[37m| Select one of the options                   \033[0m|\n");
-    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n");
-    printf(" \033[44m\033[37m|  %c.\tNew text                               \033[0m|\n",    INSERT  );
-    printf(" \033[44m\033[37m|  %c.\tAppend to text                         \033[0m|\n",    APPEND  );
-    printf(" \033[44m\033[37m|  %c.\tStats                                  \033[0m|\n",    STATS   );
-    printf(" \033[44m\033[37m|  %c.\tDisplay                                \033[0m|\n",    DISPLAY );
-    printf(" \033[44m\033[37m|  %c.\tExit                                   \033[0m|\n",    EXIT    );
+    printf("%s", " \033[44m\033[37m+---------------------------------------------+\033[0m" "\n"     );
+    printf(" \033[44m\033[37m| Select one of the options                   |\033[0m\n"              );
+    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n"              );
+    printf(" \033[44m\033[37m|  %c. New text                                |\033[0m\n",    INSERT  );
+    printf(" \033[44m\033[37m|  %c. Append to text                          |\033[0m\n",    APPEND  );
+    printf(" \033[44m\033[37m|  %c. Stats                                   |\033[0m\n",    STATS   );
+    printf(" \033[44m\033[37m|  %c. Display                                 |\033[0m\n",    DISPLAY );
+    printf(" \033[44m\033[37m|  %c  Exit                                    |\033[0m\n",    EXIT    );
     printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n\n"            );
-
     char t;
     extern char choice;
     while((t = getchar()) != NEWLINE) { choice = t; printf("\033[1A\r\033[K"); }
@@ -73,8 +72,8 @@ void show(){
         if(i == (page * PAGESIZE) - 1){ 
             printf(" + for more.. ");
             unsigned char t;
-            while((t = getchar()) != NEWLINE) if (t == '+') { page++; printf("\r\033[1A\033[49G\033[K\033[1B\r"); }else{ break; }
-        }else{ printf("\n"); }
+            while((t = getchar()) != NEWLINE) if(t == '+'){ page++; printf("\r\033[1A\033[49G\033[K\033[1B\r");} else break;
+    i    }else{ printf("\n"); }
     }    
     printf(" +-------------+----------------+------+-------+\n\n");
 }
@@ -85,7 +84,6 @@ void stats(){
     printf(" +---------------------------------------------+\n");
     printf(" | Stats                                       |\n");
     printf(" +---------------------------------------------+\n");    
- 
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
         if(chr == NEWLINE) rows++;
         if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
