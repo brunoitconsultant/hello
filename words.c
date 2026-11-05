@@ -59,13 +59,13 @@ void write(char method){
 
 void show(){
     unsigned int i, page = 1;
-    printf(" +-------------+----------------+------+-------+\n");
-    printf(" | array[n]    | address        | char | value |\n");
-    printf(" +-------------+----------------+------+-------+\n");    
-    if(input[0] == TERMINATOR) printf(" | %-43s |\n", "no data is available");
+    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n");
+    printf(" \033[38;5;51;48;5;234m| array[n]    | address        | char | value |\033[0m\n");
+    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n");
+    if(input[0] == TERMINATOR) printf(" \033[38;5;51;48;5;234m| %-43s |\033[0m\n", "no data is available");
     else{
         for(i = 0; i < (page * PAGESIZE) && input[i] != TERMINATOR; i++){
-            printf(" |[%10d] | %-10p | %-4d | %-6s|"
+            printf(" |\033[38;5;51;48;5;234m[%10d] | %-10p | %-4d | %-6s|\033[0m"
                 , i
                 , (void*)&input[i]
                 , input[i]
@@ -79,21 +79,21 @@ void show(){
             }else printf("\n");
         }
     }
-    printf(" +-------------+----------------+------+-------+\n\n");
+    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n\n");
 }
 
 void stats(){
     unsigned int rows = 1, words = 0, chars;
     char chr = TERMINATOR, prev;
-    printf(" +---------------------------------------------+\n");
-    printf(" | Stats                                       |\n");
-    printf(" +---------------------------------------------+\n");    
+    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n");
+    printf(" \033[38;5;51;48;5;234m| Stats                                       |\033[0m\n");
+    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n");    
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
         if(chr == NEWLINE) rows++;
         if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
     }
-    printf(" | Chars: %-36d |\n" " | Rows:  %-36d |\n" " | Words: %-36d |\n", chars, rows, words);
-    printf(" +---------------------------------------------+\n\n");
+    printf(" \033[38;5;51;48;5;234m| Chars: %-36d |\033[0m\n" " \033[38;5;51;48;5;234m| Rows:  %-36d |\033[0m\n" " \033[38;5;51;48;5;234m| Words: %-36d |\033[0m\n", chars, rows, words);
+    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n\n");
 }
