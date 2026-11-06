@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAXSIZE     UINT_MAX
-#define PAGESIZE    40 
+#define MAXSIZE             UINT_MAX
+#define PAGESIZE            40
+#define TERM_COLOUR_CYAN    "\033[44m\033[37m"
+#define TERM_COLOUR_DARK    "\033[38;5;51;48;5;234m"
+#define TERM_COLOUR_END     "\033[0m"
+#define TERM_CHAR_CR        "\xE2\x86\xB5"
+#define TERM_BACKSPACE      "\033[1A\r\033[K"
+#define TERM_CR             "\r"
+#define TERM_CUR_UP         "\033[1A"
+#define TERM_CUR_HORIZ_ABS  "\033[49G"
+#define TERM_ERASE_LINE     "\033[K"
+#define TERM_CUR_DOWN       "\033[1B"
 
 void write(char method);
 void show();
@@ -16,16 +26,16 @@ static char input[MAXSIZE] = { TERMINATOR };
 void menu(){
     char t;
     extern char choice;
-    printf("%s", " \033[44m\033[37m+---------------------------------------------+\033[0m" "\n"     );
-    printf(" \033[44m\033[37m| Select one of the following TEXT options    |\033[0m\n"              );
-    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n"              );
-    printf(" \033[44m\033[37m|  %c. Write new                               |\033[0m\n",    INSERT  );
-    printf(" \033[44m\033[37m|  %c. Append to existing                      |\033[0m\n",    APPEND  );
-    printf(" \033[44m\033[37m|  %c. Show                                    |\033[0m\n",    DISPLAY );
-    printf(" \033[44m\033[37m|  %c. Calculate stats                         |\033[0m\n",    STATS   );
-    printf(" \033[44m\033[37m|  %c  Exit                                    |\033[0m\n",    EXIT    );
-    printf(" \033[44m\033[37m+---------------------------------------------+\033[0m\n\n"            );
-    while((t = getchar()) != NEWLINE) { choice = t; printf("\033[1A\r\033[K"); }
+    printf(" %s+---------------------------------------------+%s" "\n", TERM_COLOUR_CYAN,            TERM_COLOUR_END  );
+    printf(" %s| Select one of the following TEXT options    |%s\n",    TERM_COLOUR_CYAN,            TERM_COLOUR_END  );
+    printf(" %s+---------------------------------------------+%s\n",    TERM_COLOUR_CYAN,            TERM_COLOUR_END  );
+    printf(" %s|  %c. Write new                               |%s\n",   TERM_COLOUR_CYAN, INSERT,    TERM_COLOUR_END  );
+    printf(" %s|  %c. Append to existing                      |%s\n",   TERM_COLOUR_CYAN, APPEND,    TERM_COLOUR_END  );
+    printf(" %s|  %c. Show                                    |%s\n",   TERM_COLOUR_CYAN, DISPLAY,   TERM_COLOUR_END  );
+    printf(" %s|  %c. Calculate stats                         |%s\n",   TERM_COLOUR_CYAN, STATS,     TERM_COLOUR_END  );
+    printf(" %s|  %c  Exit                                    |%s\n",   TERM_COLOUR_CYAN, EXIT,      TERM_COLOUR_END  );
+    printf(" %s+---------------------------------------------+%s\n\n",  TERM_COLOUR_CYAN,            TERM_COLOUR_END  );
+    while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        TERM_BACKSPACE); }
 }
 
 int main() {
@@ -46,7 +56,7 @@ void write(char method){
     unsigned int i;
    
     if      (method == INSERT)  i = 0;
-    else if (method == APPEND)  for(unsigned int b = 0; b < MAXSIZE && input[b] != TERMINATOR; b++) i = b++;
+    else if (method == APPEND)  for(unsigned int b = 0 + 1; b < MAXSIZE && input[b] != TERMINATOR; b++) i = ++b;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
@@ -59,41 +69,43 @@ void write(char method){
 
 void show(){
     unsigned int i, page = 1;
-    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n");
-    printf(" \033[38;5;51;48;5;234m| array[n]    | address        | char | value |\033[0m\n");
-    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n");
-    if(input[0] == TERMINATOR) printf(" \033[38;5;51;48;5;234m| %-43s |\033[0m\n", "no data is available");
+    printf(" %s+-------------+----------------+------+-------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
+    printf(" %s| array[n]    | address        | char | value |%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
+    printf(" %s+-------------+----------------+------+-------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
+    if(input[0] == TERMINATOR) printf(" %s| %-43s |%s\n", TERM_COLOUR_DARK, "no data is available", TERM_COLOUR_END);
     else{
         for(i = 0; i < (page * PAGESIZE) && input[i] != TERMINATOR; i++){
-            printf(" |\033[38;5;51;48;5;234m[%10d] | %-10p | %-4d | %-6s|\033[0m"
+            printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
+                , TERM_COLOUR_DARK
                 , i
                 , (void*)&input[i]
                 , input[i]
-                , (input[i] == NEWLINE ? "\xE2\x86\xB5     " : (char[]){ input[i], TERMINATOR })
+                , (input[i] == NEWLINE ? TERM_CHAR_CR "     ": (char[]){ input[i], TERMINATOR })
+                , TERM_COLOUR_END
             );
             if(i == (page * PAGESIZE) - 1){ 
-                printf(" + for more.. ");
+                printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != NEWLINE) 
-                    if(t == '+'){ page++; printf("\r\033[1A\033[49G\033[K\033[1B\r");} else break;
+                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", TERM_CR, TERM_CUR_UP, TERM_CUR_HORIZ_ABS, TERM_ERASE_LINE, TERM_CUR_DOWN, TERM_CR);} else break;
             }else printf("\n");
         }
     }
-    printf(" \033[38;5;51;48;5;234m+-------------+----------------+------+-------+\033[0m\n\n");
+    printf(" %s+-------------+----------------+------+-------+%s\n\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
 }
 
 void stats(){
     unsigned int rows = 1, words = 0, chars;
     char chr = TERMINATOR, prev;
-    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n");
-    printf(" \033[38;5;51;48;5;234m| Stats                                       |\033[0m\n");
-    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n");    
+    printf(" %s+---------------------------------------------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
+    printf(" %s| Stats                                       |%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
+    printf(" %s+---------------------------------------------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
         if(chr == NEWLINE) rows++;
         if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
             if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
     }
-    printf(" \033[38;5;51;48;5;234m| Chars: %-36d |\033[0m\n" " \033[38;5;51;48;5;234m| Rows:  %-36d |\033[0m\n" " \033[38;5;51;48;5;234m| Words: %-36d |\033[0m\n", chars, rows, words);
-    printf(" \033[38;5;51;48;5;234m+---------------------------------------------+\033[0m\n\n");
+    printf(" %s| Chars: %-36d |%s\n" " %s| Rows:  %-36d |%s\n" " %s| Words: %-36d |%s\n", TERM_COLOUR_DARK, chars, TERM_COLOUR_END, TERM_COLOUR_DARK, rows, TERM_COLOUR_END, TERM_COLOUR_DARK, words, TERM_COLOUR_END);
+    printf(" %s+---------------------------------------------+%s\n\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
 }
