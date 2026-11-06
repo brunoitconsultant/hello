@@ -87,7 +87,8 @@ void show(){
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != NEWLINE) 
-                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", TERM_CR, TERM_CUR_UP, TERM_CUR_HORIZ_ABS, TERM_ERASE_LINE, TERM_CUR_DOWN, TERM_CR);} else break;
+                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", TERM_CR, TERM_CUR_UP, TERM_CUR_HORIZ_ABS, TERM_ERASE_LINE, TERM_CUR_DOWN, TERM_CR);} 
+                    else break;
             }else printf("\n");
         }
     }
