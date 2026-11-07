@@ -95,15 +95,14 @@ void show(){
 }
 
 void stats(){
-    unsigned int rows = 1, words = 0, chars;
+    unsigned int rows = 0, words = 0, chars = 0;
     char chr = TERMINATOR, prev;
     printf(" %s+---------------------------------------------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
     printf(" %s| Stats                                       |%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
     printf(" %s+---------------------------------------------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
         if(chr == NEWLINE) rows++;
-        if(((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z')) && ((chr < 'a' || chr > 'z') && (chr < 'A' && chr > 'Z'))) ++words;
-            //if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
+        if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))) ++words;
         prev = chr;
     }
     printf(" %s| Chars: %-36d |%s\n" " %s| Rows:  %-36d |%s\n" " %s| Words: %-36d |%s\n", TERM_COLOUR_DARK, chars, TERM_COLOUR_END, TERM_COLOUR_DARK, rows, TERM_COLOUR_END, TERM_COLOUR_DARK, words, TERM_COLOUR_END);
