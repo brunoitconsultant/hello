@@ -53,10 +53,10 @@ int main() {
 
 void write(char method){
     char c;
-    unsigned int i;
-   
-    if      (method == INSERT)  i = 0;
-    else if (method == APPEND)  for(unsigned int b = 0 + 1; b < MAXSIZE && input[b] != TERMINATOR; b++) i = ++b;
+    unsigned int i = 0;
+
+    if      (method == INSERT);
+    else if (method == APPEND) while(input[i] != TERMINATOR) i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
@@ -87,8 +87,7 @@ void show(){
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != NEWLINE) 
-                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", TERM_CR, TERM_CUR_UP, TERM_CUR_HORIZ_ABS, TERM_ERASE_LINE, TERM_CUR_DOWN, TERM_CR);} 
-                    else break;
+                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", TERM_CR, TERM_CUR_UP, TERM_CUR_HORIZ_ABS, TERM_ERASE_LINE, TERM_CUR_DOWN, TERM_CR);} else break;
             }else printf("\n");
         }
     }
@@ -103,8 +102,8 @@ void stats(){
     printf(" %s+---------------------------------------------+%s\n", TERM_COLOUR_DARK, TERM_COLOUR_END);
     for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
         if(chr == NEWLINE) rows++;
-        if((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z'))
-            if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
+        if(((prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z')) && ((chr < 'a' || chr > 'z') && (chr < 'A' && chr > 'Z'))) ++words;
+            //if((chr < 'a' || chr > 'z') || (chr < 'A' && chr > 'Z')) words++;
         prev = chr;
     }
     printf(" %s| Chars: %-36d |%s\n" " %s| Rows:  %-36d |%s\n" " %s| Words: %-36d |%s\n", TERM_COLOUR_DARK, chars, TERM_COLOUR_END, TERM_COLOUR_DARK, rows, TERM_COLOUR_END, TERM_COLOUR_DARK, words, TERM_COLOUR_END);
