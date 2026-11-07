@@ -3,8 +3,7 @@
 
 #define MAXSIZE         UINT_MAX
 #define PAGESIZE        40
-//TERMINAL STYLING STUFF
-#define T_CYAN          "\033[44m\033[37m"
+#define T_CYAN          "\033[44m\033[37m"          //STYLING STUFF (below)
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
 #define T_CHAR_CR       "\xE2\x86\xB5"
