@@ -30,7 +30,7 @@ void menu(){
     printf(" %s| Select one of the following TEXT options    |%s\n",    T_CYAN,            T_END  );
     printf(" %s+---------------------------------------------+%s\n",    T_CYAN,            T_END  );
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,    T_END  );
-    printf(" %s|  %c. Append to existing                      |%s\n",   T_CYAN, APPEND,    T_END  );
+    printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,    T_END  );
     printf(" %s|  %c. Show                                    |%s\n",   T_CYAN, DISPLAY,   T_END  );
     printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,     T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,      T_END  );
