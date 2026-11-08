@@ -1,7 +1,6 @@
 ##  RUN IN BASH
 ### > GET SOURCES
-git clone https://github.com/brunoitconsultant/hello.git ~/hello ; cd ~/hello
+git clone https://github.com/brunoitconsultant/words.git ~/words ; cd ~/words
 
 ### > COMPILE CODE
-clear ; make -s ; ./fahr_to_celsius
 clear ; make -s ; ./words
