@@ -3,7 +3,7 @@
 
 #define MAXSIZE         UINT_MAX
 #define PAGESIZE        40
-#define T_CYAN          "\033[44m\033[37m"          //STYLING STUFF (below)
+#define T_CYAN          "\033[44m\033[37m"          //TERMINAL STYLING STUFF
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
 #define T_CHAR_CR       "\xE2\x86\xB5"
@@ -54,7 +54,6 @@ int main() {
 void write(char method){
     char c;
     unsigned int i = 0;
-
     if      (method == INSERT);
     else if (method == APPEND) while(input[i] != TERMINATOR) i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
