@@ -123,6 +123,7 @@ void show(char object){
         }
         printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
     }else if(object == DISPLAY_TOKENS){
+        tokenize();
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
         printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
