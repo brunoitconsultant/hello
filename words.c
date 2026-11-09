@@ -16,7 +16,7 @@
 
 void write(char method);
 void tokenize();
-void show();
+void show(char object);
 void stats();
 
 enum choices { 
@@ -41,7 +41,7 @@ void menu(){
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
     printf(" %s|  %c. Show Input                              |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
-    printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS  T_END  );
+    printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
     printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,          T_END  );
     printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
@@ -53,13 +53,14 @@ int main() {
     extern char choice;
     while(1){
         menu();
-        if      (choice              == EXIT)       return 0;
-        else if (choice              == INSERT)     write(choice);
-        else if (choice              == APPEND)     write(choice);
-        else if (choice              == DISPLAY)    show();
-        else if (choice              == TOKENIZE)   tokenize();
-        else if (choice              == STATS)      stats();
-        else                                        printf(" \"%c\" is an invalid option\n", choice);
+        if      (choice              == EXIT)           return 0;
+        else if (choice              == INSERT)         write(choice);
+        else if (choice              == APPEND)         write(choice);
+        else if (choice              == DISPLAY_INPUT)  show(choice);
+        else if (choice              == DISPLAY_TOKENS) show(choice);
+        else if (choice              == TOKENIZE)       tokenize();
+        else if (choice              == STATS)          stats();
+        else                                            printf(" \"%c\" is an invalid option\n", choice);
     } 
 }
 
@@ -104,7 +105,7 @@ void tokenize(){
     }
 }
 
-void show(){
+void show(char object){
     unsigned int i, page = 1;
     printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
     printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
