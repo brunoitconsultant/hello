@@ -20,17 +20,18 @@ void show(char object);
 void stats();
 
 enum choices { 
-    INSERT = '1'
-    , APPEND = '2'
-    , DISPLAY_INPUT = '3'
-    , DISPLAY_TOKENS = '4'
-    , STATS = '5'
-    , TOKENIZE = '6'
-    , EXIT = '9' 
+    INSERT              = '1'
+    ,APPEND             = '2'
+    ,TOKENIZE           = '3'
+    ,STATS              = '4'
+    ,DISPLAY_INPUT      = '5'
+    ,DISPLAY_TOKENS     = '6'
+    ,EXIT               = '0' 
 };
 static char choice;
 static const char TERMINATOR = '\0', NEWLINE = '\n';
-static char input[MAXSIZE] = { TERMINATOR };
+static unsigned char input[MAXSIZE] = { TERMINATOR };
+unsigned short token[100][3] = { { TERMINATOR } };
 
 void menu(){
     char t;
@@ -40,10 +41,10 @@ void menu(){
     printf(" %s+---------------------------------------------+%s\n",    T_CYAN,                 T_END  );
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
+    printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
+    printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,          T_END  );
     printf(" %s|  %c. Show Input                              |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
     printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
-    printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,          T_END  );
-    printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
     while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        T_BACKSPACE); }
@@ -53,14 +54,14 @@ int main() {
     extern char choice;
     while(1){
         menu();
-        if      (choice              == EXIT)           return 0;
-        else if (choice              == INSERT)         write(choice);
-        else if (choice              == APPEND)         write(choice);
-        else if (choice              == DISPLAY_INPUT)  show(choice);
-        else if (choice              == DISPLAY_TOKENS) show(choice);
-        else if (choice              == TOKENIZE)       tokenize();
-        else if (choice              == STATS)          stats();
-        else                                            printf(" \"%c\" is an invalid option\n", choice);
+        if      (choice              == EXIT)               return 0;
+        else if (choice              == INSERT)             write(choice);
+        else if (choice              == APPEND)             write(choice);
+        else if (choice              == TOKENIZE)           tokenize();
+        else if (choice              == STATS)              stats();
+        else if (choice              == DISPLAY_INPUT)      show(choice);
+        else if (choice              == DISPLAY_TOKENS)     show(choice);
+        else                                                printf(" \"%c\" is an invalid option\n", choice);
     } 
 }
 
@@ -80,9 +81,7 @@ void write(char method){
 }
 
 void tokenize(){
-    unsigned short token[10][3] = { { TERMINATOR } };
     char chr = TERMINATOR, prev;
-    
     unsigned short id = 0, start, length;
     for(unsigned short i = 0; (chr = input[i]) != TERMINATOR; i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
@@ -94,20 +93,14 @@ void tokenize(){
             id++;
             
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
-        else { ; }
         prev = chr;
     }
-
-    for(unsigned short r = 0; r < id; r++){
-        printf("Token[%d]:\t", token[r][0]);
-        for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ printf("%s", (char[]){ input[i], TERMINATOR }); } 
-        printf("\n");
-    }
+    token[id][2] = 0;
 }
 
 void show(char object){
     unsigned int i, page = 1;
-   if(input[0] == TERMINATOR) printf("%s\n", "no data is available");
+    if(input[0] == TERMINATOR) printf("%s\n", "no data is available");
     else if(object == DISPLAY_INPUT){
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
@@ -129,7 +122,19 @@ void show(char object){
             }else printf("\n");
         }
         printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
-    }else if(object == DISPLAY_INPUT){
+    }else if(object == DISPLAY_TOKENS){
+        printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
+        printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
+        printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
+        for(unsigned short r = 0; token[r][2] != TERMINATOR; r++){
+            printf(" %s|[%10d] | ", T_DARK, token[r][0]);
+            for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ 
+                printf("%s", (char[]){ input[i], TERMINATOR });
+            }
+            for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); }
+            printf("|%s\n", T_END);
+        }
+        printf(" %s+-------------+-------------------------------+%s\n\n", T_DARK, T_END);
     }
 }
 
