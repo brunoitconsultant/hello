@@ -69,7 +69,31 @@ void write(char method){
     clearerr(stdin);
 }
 
-void tokenize(){ printf("I'm tokenizing.....\n"); }
+void tokenize(){
+    unsigned short token[10][3] = { { TERMINATOR } };
+    char chr = TERMINATOR, prev;
+    
+    unsigned short id = 0, start, length;
+    for(unsigned short i = 0; (chr = input[i]) != TERMINATOR; i++){
+        if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
+            start = i;
+            length = 1;
+            token[id][0] = id;
+            token[id][1] = start;
+            token[id][2] = length;
+            id++;
+            
+        }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
+        else { ; }
+        prev = chr;
+    }
+
+    for(unsigned short r = 0; r < id; r++){
+        printf("Token[%d]:\t", token[r][0]);
+        for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ printf("%s", (char[]){ input[i], TERMINATOR }); } 
+        printf("\n");
+    }
+}
 
 void show(){
     unsigned int i, page = 1;
@@ -84,7 +108,7 @@ void show(){
                 , i
                 , (void*)&input[i]
                 , input[i]
-                , (input[i] == NEWLINE ? T_CHAR_CR "     ": (char[]){ input[i], TERMINATOR })
+                , (input[i] == NEWLINE ? T_CHAR_CR "     " : (char[]){ input[i], TERMINATOR })
                 , T_END
             );
             if(i == (page * PAGESIZE) - 1){ 
