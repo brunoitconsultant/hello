@@ -15,10 +15,11 @@
 #define T_DOWN          "\033[1B"
 
 void write(char method);
+void tokenize();
 void show();
 void stats();
 
-enum choices { INSERT = '1', APPEND = '2', DISPLAY = '3', STATS = '4', EXIT = '9' };
+enum choices { INSERT = '1', APPEND = '2', DISPLAY = '3', STATS = '4', TOKENIZE = '5', EXIT = '9' };
 static char choice;
 static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
@@ -33,6 +34,7 @@ void menu(){
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,    T_END  );
     printf(" %s|  %c. Show                                    |%s\n",   T_CYAN, DISPLAY,   T_END  );
     printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,     T_END  );
+    printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,  T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,      T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,            T_END  );
     while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        T_BACKSPACE); }
@@ -46,6 +48,7 @@ int main() {
         else if (choice              == INSERT)     write(choice);
         else if (choice              == APPEND)     write(choice);
         else if (choice              == DISPLAY)    show();
+        else if (choice              == TOKENIZE)   tokenize();
         else if (choice              == STATS)      stats();
         else                                        printf(" \"%c\" is an invalid option\n", choice);
     } 
@@ -65,6 +68,8 @@ void write(char method){
     input[i] = TERMINATOR;
     clearerr(stdin);
 }
+
+void tokenize(){ printf("I'm tokenizing.....\n"); }
 
 void show(){
     unsigned int i, page = 1;
