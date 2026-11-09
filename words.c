@@ -19,7 +19,15 @@ void tokenize();
 void show();
 void stats();
 
-enum choices { INSERT = '1', APPEND = '2', DISPLAY = '3', STATS = '4', TOKENIZE = '5', EXIT = '9' };
+enum choices { 
+    INSERT = '1'
+    , APPEND = '2'
+    , DISPLAY_INPUT = '3'
+    , DISPLAY_TOKENS = '4'
+    , STATS = '5'
+    , TOKENIZE = '6'
+    , EXIT = '9' 
+};
 static char choice;
 static const char TERMINATOR = '\0', NEWLINE = '\n';
 static char input[MAXSIZE] = { TERMINATOR };
@@ -27,16 +35,17 @@ static char input[MAXSIZE] = { TERMINATOR };
 void menu(){
     char t;
     extern char choice;
-    printf(" %s+---------------------------------------------+%s" "\n", T_CYAN,            T_END  );
-    printf(" %s| Select one of the following TEXT options    |%s\n",    T_CYAN,            T_END  );
-    printf(" %s+---------------------------------------------+%s\n",    T_CYAN,            T_END  );
-    printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,    T_END  );
-    printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,    T_END  );
-    printf(" %s|  %c. Show                                    |%s\n",   T_CYAN, DISPLAY,   T_END  );
-    printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,     T_END  );
-    printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,  T_END  );
-    printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,      T_END  );
-    printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,            T_END  );
+    printf(" %s+---------------------------------------------+%s" "\n", T_CYAN,                 T_END  );
+    printf(" %s| Select one of the following TEXT options    |%s\n",    T_CYAN,                 T_END  );
+    printf(" %s+---------------------------------------------+%s\n",    T_CYAN,                 T_END  );
+    printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
+    printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
+    printf(" %s|  %c. Show Input                              |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
+    printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS  T_END  );
+    printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,          T_END  );
+    printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
+    printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
+    printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
     while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        T_BACKSPACE); }
 }
 
