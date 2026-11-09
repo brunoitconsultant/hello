@@ -2,7 +2,8 @@
 #include <limits.h>
 
 #define MAXSIZE         UINT_MAX
-#define PAGESIZE        40
+#define MAXWORDS        85
+#define PAGESIZE        40 
 #define T_CYAN          "\033[44m\033[37m"          //TERMINAL STYLING STUFF
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
@@ -23,15 +24,15 @@ enum choices {
     INSERT              = '1'
     ,APPEND             = '2'
     ,TOKENIZE           = '3'
-    ,STATS              = '4'
-    ,DISPLAY_INPUT      = '5'
-    ,DISPLAY_TOKENS     = '6'
-    ,EXIT               = '0' 
+    ,DISPLAY_INPUT      = '4'
+    ,DISPLAY_TOKENS     = '5'
+    ,STATS              = '6'
+    ,EXIT               = '9' 
 };
 static char choice;
 static const char TERMINATOR = '\0', NEWLINE = '\n';
 static unsigned char input[MAXSIZE] = { TERMINATOR };
-unsigned short token[100][3] = { { TERMINATOR } };
+unsigned short token[MAXWORDS][3] = { { TERMINATOR } };
 
 void menu(){
     char t;
@@ -42,9 +43,9 @@ void menu(){
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
     printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
-    printf(" %s|  %c. Calculate stats                         |%s\n",   T_CYAN, STATS,          T_END  );
     printf(" %s|  %c. Show Input                              |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
     printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
+    printf(" %s|  %c. Show Stats                              |%s\n",   T_CYAN, STATS,          T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
     while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        T_BACKSPACE); }
@@ -83,15 +84,16 @@ void write(char method){
 void tokenize(){
     char chr = TERMINATOR, prev;
     unsigned short id = 0, start, length;
-    for(unsigned short i = 0; (chr = input[i]) != TERMINATOR; i++){
+    for(unsigned short i = 0; ((chr = input[i]) != TERMINATOR); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
-            start = i;
-            length = 1;
-            token[id][0] = id;
-            token[id][1] = start;
-            token[id][2] = length;
-            id++;
-            
+            if(id < MAXWORDS-1){
+                start = i;
+                length = 1;
+                token[id][0] = id;
+                token[id][1] = start;
+                token[id][2] = length;
+                id++;
+            }else{ break; }
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
         prev = chr;
     }
