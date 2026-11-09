@@ -95,13 +95,13 @@ void tokenize(){
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
         prev = chr;
     }
-    token[id][2] = 0;
+    token[id][2] = TERMINATOR;
 }
 
 void show(char object){
-    unsigned int i, page = 1;
     if(input[0] == TERMINATOR) printf("%s\n", "no data is available");
     else if(object == DISPLAY_INPUT){
+        unsigned int i, page = 1;
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
@@ -128,11 +128,8 @@ void show(char object){
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
         for(unsigned short r = 0; token[r][2] != TERMINATOR; r++){
             printf(" %s|[%10d] | ", T_DARK, token[r][0]);
-            for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ 
-                printf("%s", (char[]){ input[i], TERMINATOR });
-            }
-            for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); }
-            printf("|%s\n", T_END);
+            for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ printf("%c", input[i]); }
+            for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); } printf("|%s\n", T_END);
         }
         printf(" %s+-------------+-------------------------------+%s\n\n", T_DARK, T_END);
     }
