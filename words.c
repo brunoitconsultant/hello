@@ -107,11 +107,11 @@ void tokenize(){
 
 void show(char object){
     unsigned int i, page = 1;
-    printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-    printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
-    printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-    if(input[0] == TERMINATOR) printf(" %s| %-43s |%s\n", T_DARK, "no data is available", T_END);
-    else{
+   if(input[0] == TERMINATOR) printf("%s\n", "no data is available");
+    else if(object == DISPLAY_INPUT){
+        printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
+        printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
+        printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         for(i = 0; i < (page * PAGESIZE) && input[i] != TERMINATOR; i++){
             printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
                 , T_DARK
@@ -128,8 +128,9 @@ void show(char object){
                     if(t == '+'){ page++; printf("%s%s%s%s%s%s", T_CR, T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN, T_CR);} else break;
             }else printf("\n");
         }
+        printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
+    }else if(object == DISPLAY_INPUT){
     }
-    printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
 }
 
 void stats(){
