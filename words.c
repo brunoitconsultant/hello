@@ -30,9 +30,8 @@ enum choices {
     ,EXIT               = '9' 
 };
 static char choice;
-static const char TERMINATOR = '\0', NEWLINE = '\n';
-static unsigned char input[MAXSIZE] = { TERMINATOR };
-unsigned short token[MAXWORDS][3] = { { TERMINATOR } };
+static unsigned char input[MAXSIZE] = { '\0' };
+unsigned short token[MAXWORDS][3] = { { '\0' } };
 
 void menu(){
     char t;
@@ -48,7 +47,7 @@ void menu(){
     printf(" %s|  %c. Show Stats                              |%s\n",   T_CYAN, STATS,          T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
-    while((t = getchar()) != NEWLINE) { choice = t; printf("%s",        T_BACKSPACE); }
+    while((t = getchar()) != '\n') { choice = t; printf("%s",           T_BACKSPACE); }
 }
 
 int main() {
@@ -70,21 +69,21 @@ void write(char method){
     char c;
     unsigned int i = 0;
     if      (method == INSERT);
-    else if (method == APPEND) while(input[i] != TERMINATOR) i++;
+    else if (method == APPEND) while(input[i] != '\0') i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
         input[i] = c;
         i++;
     }
-    input[i] = TERMINATOR;
+    input[i] = '\0';
     clearerr(stdin);
 }
 
 void tokenize(){
-    char chr = TERMINATOR, prev;
+    char chr = '\0', prev;
     unsigned short id = 0, start, length;
-    for(unsigned short i = 0; ((chr = input[i]) != TERMINATOR); i++){
+    for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
             if(id < MAXWORDS-1){
                 start = i;
@@ -97,29 +96,29 @@ void tokenize(){
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
         prev = chr;
     }
-    token[id][2] = TERMINATOR;
+    token[id][2] = '\0';
 }
 
 void show(char object){
-    if(input[0] == TERMINATOR) printf("%s\n", "no data is available");
+    if(input[0] == '\0') printf("%s\n", "no data is available");
     else if(object == DISPLAY_INPUT){
         unsigned int i, page = 1;
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-        for(i = 0; i < (page * PAGESIZE) && input[i] != TERMINATOR; i++){
+        for(i = 0; i < (page * PAGESIZE) && input[i] != '\0'; i++){
             printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
                 , T_DARK
                 , i
                 , (void*)&input[i]
                 , input[i]
-                , (input[i] == NEWLINE ? T_CHAR_CR "     " : (char[]){ input[i], TERMINATOR })
+                , (input[i] == '\n' ? T_CHAR_CR "     " : (char[]){ input[i], '\0' })
                 , T_END
             );
             if(i == (page * PAGESIZE) - 1){ 
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
-                while((t = getchar()) != NEWLINE) 
+                while((t = getchar()) != '\n') 
                     if(t == '+'){ page++; printf("%s%s%s%s%s%s", T_CR, T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN, T_CR);} else break;
             }else printf("\n");
         }
@@ -129,7 +128,7 @@ void show(char object){
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
         printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
-        for(unsigned short r = 0; token[r][2] != TERMINATOR; r++){
+        for(unsigned short r = 0; token[r][2] != '\0'; r++){
             printf(" %s|[%10d] | ", T_DARK, token[r][0]);
             for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ printf("%c", input[i]); }
             for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); } printf("|%s\n", T_END);
@@ -140,12 +139,12 @@ void show(char object){
 
 void stats(){
     unsigned int rows = 0, words = 0, chars = 0;
-    char chr = TERMINATOR, prev;
+    char chr = '\0', prev;
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
     printf(" %s| Stats                                       |%s\n", T_DARK, T_END);
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
-    for(chars = 0; (chr = input[chars]) != TERMINATOR; chars++){
-        if(chr == NEWLINE) rows++;
+    for(chars = 0; (chr = input[chars]) != '\0'; chars++){
+        if(chr == '\n') rows++;
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))) ++words;
         prev = chr;
     }
