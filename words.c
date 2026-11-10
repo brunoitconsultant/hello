@@ -80,7 +80,7 @@ void write(char method){
 }
 
 void tokenize(){
-    char chr = '\0', prev;
+    unsigned char chr, prev;
     unsigned short id = 0, start, length;
     for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
