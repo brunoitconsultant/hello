@@ -9,7 +9,6 @@
 #define T_END           "\033[0m"
 #define T_CHAR_CR       "\xE2\x86\xB5"
 #define T_BACKSPACE     "\033[1A\r\033[K"
-#define T_CR            "\r"
 #define T_UP            "\033[1A"
 #define T_HORIZ_ABS     "\033[49G"
 #define T_ERASE_LINE    "\033[K"
@@ -20,6 +19,9 @@ void tokenize();
 void show(char object);
 void stats();
 
+static char choice;
+static unsigned char input[MAXSIZE] = { '\0' };
+unsigned short token[MAXWORDS][3] = { { '\0' } };
 enum choices { 
     INSERT              = '1'
     ,APPEND             = '2'
@@ -29,9 +31,6 @@ enum choices {
     ,STATS              = '6'
     ,EXIT               = '9' 
 };
-static char choice;
-static unsigned char input[MAXSIZE] = { '\0' };
-unsigned short token[MAXWORDS][3] = { { '\0' } };
 
 void menu(){
     char t;
@@ -119,7 +118,7 @@ void show(char object){
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != '\n') 
-                    if(t == '+'){ page++; printf("%s%s%s%s%s%s", T_CR, T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN, T_CR);} else break;
+                    if(t == '+'){ page++; printf("\r%s%s%s%s\r", T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN);} else break;
             }else printf("\n");
         }
         printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
