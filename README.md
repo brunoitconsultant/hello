@@ -12,7 +12,7 @@ clear ; make clear ; make -s ; ./words
 • run (or r): Starts executing the program from the beginning until it hits a breakpoint or finishes.
 • quit (or q): Exits GDB and returns to your terminal.
 
-2. Breakpoints
+#### 2. Breakpoints
 
 • break func_name (or b func_name): Sets a pause point at the start of a specific function (e.g., b tokenize).
 • break 92 (or b 92): Sets a pause point at line 92 in the current file.
@@ -21,7 +21,7 @@ clear ; make clear ; make -s ; ./words
 • delete 1 (or d 1): Deletes breakpoint number 1.
 • delete: Deletes all active breakpoints.
 
-3. Stepping & Execution Control
+#### 3. Stepping & Execution Control
 
 • next (or n): Executes the current line of code and steps over function calls to the next line.
 • step (or s): Steps inside a function call on the current line to debug it line by line.
@@ -29,13 +29,13 @@ clear ; make clear ; make -s ; ./words
 • continue (or c): Resumes normal program execution until the next breakpoint is hit.
 • Enter (blank line): Repeats the previous command (ideal for stepping through loops repeatedly with n).
 
-4. Viewing Source Code
+#### 4. Viewing Source Code
 
 • list (or l): Displays 10 lines of source code centered around your current pause location.
 • list 80,100: Displays lines 80 through 100 of your source file.
 • tui enable / tui disable: Toggles GDB's built-in split-screen Terminal UI showing your live source code above the command prompt.
 
-5. Inspecting Variables & Arrays
+#### 5. Inspecting Variables & Arrays
 
 • info locals: Displays the current values of all local variables in the active function.
 • print var (or p var): Prints the value of a variable (e.g., p prev).
@@ -47,7 +47,7 @@ clear ; make clear ; make -s ; ./words
 • set print pretty on: Formats multi-dimensional arrays and structs across indented lines for readability.
 • set print repeats 3: Collapses long sequences of identical array values into <repeats N times>.
 
-6. Examining Raw Memory (x Command)
+#### 6. Examining Raw Memory (x Command)
 
 The syntax is x/<count><format><size> <address>:
 • Formats: x (hex), d (signed decimal), u (unsigned decimal), c (char), s (string).
