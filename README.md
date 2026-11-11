@@ -8,9 +8,9 @@ clear ; make clear ; make -s ; ./words
 ### > DEBUG CODE
 #### 1. Starting & Exiting
 
-• gdb ./program: Launches GDB with your compiled executable (must be compiled with -g).
-• run (or r): Starts executing the program from the beginning until it hits a breakpoint or finishes.
-• quit (or q): Exits GDB and returns to your terminal.
+- gdb ./program: Launches GDB with your compiled executable (must be compiled with -g).
+- run (or r): Starts executing the program from the beginning until it hits a breakpoint or finishes.
+- quit (or q): Exits GDB and returns to your terminal.
 
 #### 2. Breakpoints
 
