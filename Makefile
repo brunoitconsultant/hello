@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wuninitialized -O1 -g -fsanitize=address,undefined -mcmodel=medium
+CFLAGS = -Wall -Wextra -Wuninitialized -O0 -g -fsanitize=address,undefined -mcmodel=medium
 
 TARGETS = words
 
@@ -9,5 +9,5 @@ words: words.c
 	$(CC) $(CFLAGS) words.c -o words
 
 clean:
-	rm -f $(TARGETS)
+	@rm -f $(TARGETS)
 
