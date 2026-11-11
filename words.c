@@ -68,7 +68,7 @@ void write(char method){
     char c;
     unsigned int i = 0;
     if      (method == INSERT);
-    else if (method == APPEND) while(input[i] != '\0') i++;
+    else if (method == APPEND)  while(input[i] != '\0') i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
     while((c = getchar()) != EOF){
@@ -81,13 +81,12 @@ void write(char method){
 
 void tokenize(){
     unsigned char chr, prev = '\0';
-    unsigned short id = 0, start;
+    unsigned short id = 0;
     for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
-            if(id < MAXWORDS-1){
-                start = i;
+            if(id < (MAXWORDS - 1)){
                 token[id][0] = id;
-                token[id][1] = start;
+                token[id][1] = i;
                 token[id][2] = 1;
                 id++;
             }else break;
