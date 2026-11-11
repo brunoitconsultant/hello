@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -Wuninitialized -O1 -g -fsanitize=address,undefined -mcmodel=medium
 
 TARGETS = words
 

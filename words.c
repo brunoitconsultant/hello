@@ -4,7 +4,7 @@
 #define MAXSIZE         UINT_MAX
 #define MAXWORDS        85
 #define PAGESIZE        40 
-#define T_CYAN          "\033[44m\033[37m"          //TERMINAL STYLING STUFF
+#define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
 #define T_CHAR_CR       "\xE2\x86\xB5"
@@ -80,18 +80,17 @@ void write(char method){
 }
 
 void tokenize(){
-    unsigned char chr, prev;
-    unsigned short id = 0, start, length;
+    unsigned char chr, prev = '\0';
+    unsigned short id = 0, start;
     for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
             if(id < MAXWORDS-1){
                 start = i;
-                length = 1;
                 token[id][0] = id;
                 token[id][1] = start;
-                token[id][2] = length;
+                token[id][2] = 1;
                 id++;
-            }else{ break; }
+            }else break;
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
         prev = chr;
     }
@@ -137,8 +136,8 @@ void show(char object){
 }
 
 void stats(){
-    unsigned int rows = 0, words = 0, chars = 0;
-    char chr = '\0', prev;
+    unsigned int rows = 0, words = 0, chars;
+    char chr, prev = '\0';
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
     printf(" %s| Stats                                       |%s\n", T_DARK, T_END);
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
