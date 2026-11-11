@@ -31,6 +31,8 @@ clear ; make clear ; make -s ; ./words
 
 #### 4. Viewing Source Code
 
+- ***lay next***: Another way to display the source in assembly (press Enter to display source in c too).
+- ***ref***: Refreshes the screen in case the text shows all scrambled.
 - ***list (or l)***: Displays 10 lines of source code centered around your current pause location.
 - ***list 80,100***: Displays lines 80 through 100 of your source file.
 - ***tui enable / tui disable***: Toggles GDB's built-in split-screen Terminal UI showing your live source code above the command prompt.
