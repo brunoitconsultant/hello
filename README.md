@@ -49,7 +49,7 @@ clear ; make clear ; make -s ; ./words
 
 #### 6. Examining Raw Memory (x Command)
 
-The syntax is x/<count><format><size> <address>:
+The syntax is x/ <count> <format> <size> <address>:
 - Formats: x (hex), d (signed decimal), u (unsigned decimal), c (char), s (string).
 - Sizes: b (byte = 1 byte), h (halfword = 2 bytes / short), w (word = 4 bytes / int), g (giant = 8 bytes / long).
 Common Examples:
