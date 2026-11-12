@@ -3,7 +3,7 @@
 git clone https://github.com/brunoitconsultant/words.git ~/words ; cd ~/words
 
 ### > COMPILE CODE
-clear ; make clear ; make -s ; ./words
+clear ; make clean ; make -s ; ./words
 
 ### > DEBUG CODE (using GDB)
 #### 1. Starting & Exiting
