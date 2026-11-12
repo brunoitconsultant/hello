@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAXSIZE         UINT_MAX
+#define MAXCHARS        UINT_MAX
 #define MAXWORDS        85
-#define PAGESIZE        40 
+#define MAXPAGESIZE     50 
 #define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
@@ -20,8 +20,8 @@ void show(char object);
 void stats();
 
 static char choice;
-static unsigned char input[MAXSIZE] = { '\0' };
-unsigned short token[MAXWORDS][3] = { { '\0' } };
+static unsigned char input[MAXCHARS]    = { '\0' };
+unsigned short token[MAXWORDS][3]       = { { '\0' } };
 enum choices { 
     INSERT              = '1'
     ,APPEND             = '2'
@@ -67,7 +67,7 @@ int main() {
 void write(char method){
     char c;
     unsigned int i = 0;
-    if      (method == INSERT);
+    if      (method == INSERT)  ;
     else if (method == APPEND)  while(input[i] != '\0') i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
 
@@ -103,7 +103,7 @@ void show(char object){
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-        for(i = 0; i < (page * PAGESIZE) && input[i] != '\0'; i++){
+        for(i = 0; i < (page * MAXPAGESIZE) && input[i] != '\0'; i++){
             printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
                 , T_DARK
                 , i
@@ -112,7 +112,7 @@ void show(char object){
                 , (input[i] == '\n' ? T_CHAR_CR "     " : (char[]){ input[i], '\0' })
                 , T_END
             );
-            if(i == (page * PAGESIZE) - 1){ 
+            if(i == (page * MAXPAGESIZE) - 1){ 
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != '\n') 
@@ -136,7 +136,7 @@ void show(char object){
 
 void stats(){
     unsigned int rows = 0, words = 0, chars;
-    char chr, prev = '\0';
+    unsigned char chr, prev = '\0';
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
     printf(" %s| Stats                                       |%s\n", T_DARK, T_END);
     printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
