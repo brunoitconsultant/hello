@@ -8,6 +8,7 @@ clear ; make clean ; make -s ; ./words
 ### > DEBUG CODE (using GDB)
 #### 0. Demo
 - ***Youtube***: https://www.youtube.com/watch?v=svG6OPyKsrw
+- ***Youtube***: https://www.youtube.com/watch?v=PorfLSr3DDI
 #### 1. Starting & Exiting
 
 - ***gdb ./program***: Launches GDB with your compiled executable (must be compiled with -g).
