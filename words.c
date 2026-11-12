@@ -2,7 +2,7 @@
 #include <limits.h>
 
 #define MAX_CHARS       UINT_MAX
-#define MAX_WORDS       85
+#define MAX_WORDS       10 
 #define MAX_PAGESIZE    50 
 #define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
@@ -16,8 +16,7 @@
 
 void write(char method);
 void tokenize();
-void show(char object);
-void stats();
+void display(char choice);
 
 static char choice;
 static unsigned char input[MAX_CHARS]   = { '\0' };
@@ -27,9 +26,9 @@ enum choices {
     INSERT              = '1'
     ,APPEND             = '2'
     ,TOKENIZE           = '3'
-    ,DISPLAY_INPUT      = '4'
-    ,DISPLAY_TOKENS     = '5'
-    ,STATS              = '6'
+    ,DISPLAY_STATS      = '4'
+    ,DISPLAY_INPUT      = '5'
+    ,DISPLAY_TOKENS     = '6'
     ,EXIT               = '9' 
 };
 
@@ -37,14 +36,16 @@ void menu(){
     char t;
     extern char choice;
     printf(" %s+---------------------------------------------+%s" "\n", T_CYAN,                 T_END  );
-    printf(" %s| Select one of the following TEXT options    |%s\n",    T_CYAN,                 T_END  );
+    printf(" %s| Pick one of the following operations:       |%s\n",    T_CYAN,                 T_END  );
     printf(" %s+---------------------------------------------+%s\n",    T_CYAN,                 T_END  );
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
     printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
-    printf(" %s|  %c. Show Input                              |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
-    printf(" %s|  %c. Show Tokens                             |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
-    printf(" %s|  %c. Show Stats                              |%s\n",   T_CYAN, STATS,          T_END  );
+    printf(" %s|                                             |%s\n",    T_CYAN,                 T_END  );
+    printf(" %s|  %c. Display Statistics                      |%s\n",   T_CYAN, DISPLAY_STATS,  T_END  );
+    printf(" %s|  %c. Display Input                           |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
+    printf(" %s|  %c. Display Tokens                          |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
+    printf(" %s|                                             |%s\n",    T_CYAN,                 T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
     while((t = getchar()) != '\n') { choice = t; printf("%s",           T_BACKSPACE); }
@@ -58,9 +59,9 @@ int main() {
         else if (choice              == INSERT)             write(choice);
         else if (choice              == APPEND)             write(choice);
         else if (choice              == TOKENIZE)           tokenize();
-        else if (choice              == STATS)              stats();
-        else if (choice              == DISPLAY_INPUT)      show(choice);
-        else if (choice              == DISPLAY_TOKENS)     show(choice);
+        else if (choice              == DISPLAY_STATS)      display(choice);
+        else if (choice              == DISPLAY_INPUT)      display(choice);
+        else if (choice              == DISPLAY_TOKENS)     display(choice);
         else                                                printf(" \"%c\" is an invalid option\n", choice);
     } 
 }
@@ -83,7 +84,7 @@ void write(char method){
 void tokenize(){
     unsigned char chr, prev = '\0';
     unsigned short id = 0;
-    for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
+    for(unsigned int i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
             if(id < (MAX_WORDS - 1)){
                 token[id][0] = id;
@@ -97,9 +98,9 @@ void tokenize(){
     token[id][2] = '\0';
 }
 
-void show(char object){
-    if(input[0] == '\0') printf("%s\n", "no data is available");
-    else if(object == DISPLAY_INPUT){
+void display(char choice){
+    if(input[0] == '\0') printf(" %s\n", "no data is available");
+    else if(choice == DISPLAY_INPUT){
         unsigned int i, page = 1;
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
@@ -121,7 +122,7 @@ void show(char object){
             }else printf("\n");
         }
         printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
-    }else if(object == DISPLAY_TOKENS){
+    }else if(choice == DISPLAY_TOKENS){
         tokenize();
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
         printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
@@ -132,20 +133,18 @@ void show(char object){
             for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); } printf("|%s\n", T_END);
         }
         printf(" %s+-------------+-------------------------------+%s\n\n", T_DARK, T_END);
+    }else if(choice == DISPLAY_STATS){
+        unsigned int rows = 0, words = 0, chars;
+        unsigned char chr, prev = '\0';
+        printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
+        printf(" %s| Stats                                       |%s\n", T_DARK, T_END);
+        printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
+        for(chars = 0; (chr = input[chars]) != '\0'; chars++){
+            if(chr == '\n') rows++;
+            if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))) ++words;
+            prev = chr;
+        }
+        printf(" %s| Chars: %-36d |%s\n %s| Rows:  %-36d |%s\n %s| Words: %-36d |%s\n", T_DARK, chars, T_END, T_DARK, rows, T_END, T_DARK, words, T_END);
+        printf(" %s+---------------------------------------------+%s\n\n", T_DARK, T_END);
     }
-}
-
-void stats(){
-    unsigned int rows = 0, words = 0, chars;
-    unsigned char chr, prev = '\0';
-    printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
-    printf(" %s| Stats                                       |%s\n", T_DARK, T_END);
-    printf(" %s+---------------------------------------------+%s\n", T_DARK, T_END);
-    for(chars = 0; (chr = input[chars]) != '\0'; chars++){
-        if(chr == '\n') rows++;
-        if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))) ++words;
-        prev = chr;
-    }
-    printf(" %s| Chars: %-36d |%s\n" " %s| Rows:  %-36d |%s\n" " %s| Words: %-36d |%s\n", T_DARK, chars, T_END, T_DARK, rows, T_END, T_DARK, words, T_END);
-    printf(" %s+---------------------------------------------+%s\n\n", T_DARK, T_END);
 }
