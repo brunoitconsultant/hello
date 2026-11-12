@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAX_CHARS       UINT_MAX
-#define MAX_WORDS       10 
+#define MAX_CHARS       INT_MAX     //2.1 Gb
+#define MAX_WORDS       320'000'000 
 #define MAX_PAGESIZE    50 
 #define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
@@ -83,7 +83,7 @@ void write(char method){
 
 void tokenize(){
     unsigned char chr, prev = '\0';
-    unsigned short id = 0;
+    unsigned int id = 0;
     for(unsigned int i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
             if(id < (MAX_WORDS - 1)){
