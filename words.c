@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAXCHARS        UINT_MAX
-#define MAXWORDS        85
-#define MAXPAGESIZE     50 
+#define MAX_CHARS       UINT_MAX
+#define MAX_WORDS       85
+#define MAX_PAGESIZE    50 
 #define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
@@ -20,8 +20,9 @@ void show(char object);
 void stats();
 
 static char choice;
-static unsigned char input[MAXCHARS]    = { '\0' };
-unsigned short token[MAXWORDS][3]       = { { '\0' } };
+static unsigned char input[MAX_CHARS]   = { '\0' };
+unsigned short token[MAX_WORDS][3]      = { { '\0' } };
+
 enum choices { 
     INSERT              = '1'
     ,APPEND             = '2'
@@ -84,7 +85,7 @@ void tokenize(){
     unsigned short id = 0;
     for(unsigned short i = 0; ((chr = input[i]) != '\0'); i++){
         if(((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) && (prev < 'A' || ((prev > 'Z' && prev < 'a') && prev > 'z'))){
-            if(id < (MAXWORDS - 1)){
+            if(id < (MAX_WORDS - 1)){
                 token[id][0] = id;
                 token[id][1] = i;
                 token[id][2] = 1;
@@ -103,7 +104,7 @@ void show(char object){
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-        for(i = 0; i < (page * MAXPAGESIZE) && input[i] != '\0'; i++){
+        for(i = 0; i < (page * MAX_PAGESIZE) && input[i] != '\0'; i++){
             printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
                 , T_DARK
                 , i
@@ -112,7 +113,7 @@ void show(char object){
                 , (input[i] == '\n' ? T_CHAR_CR "     " : (char[]){ input[i], '\0' })
                 , T_END
             );
-            if(i == (page * MAXPAGESIZE) - 1){ 
+            if(i == (page * MAX_PAGESIZE) - 1){ 
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != '\n') 
