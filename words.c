@@ -3,7 +3,7 @@
 
 #define MAX_CHARS       INT_MAX
 #define MAX_WORDS       320'000'000 
-#define MAX_PAGESIZE    3 
+#define MAX_PAGESIZE    50 
 #define T_CYAN          "\033[44m\033[37m"
 #define T_DARK          "\033[38;5;51;48;5;234m"
 #define T_END           "\033[0m"
@@ -96,22 +96,22 @@ void tokenize(){
 }
 
 void display(char choice){
+    unsigned int pos, page = 1;
     if(input[0] == '\0') printf(" %s\n", "no data is available");
     else if(choice == DISPLAY_INPUT){
-        unsigned int i, page = 1;
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
         printf(" %s| array[n]    | address        | char | value |%s\n", T_DARK, T_END);
         printf(" %s+-------------+----------------+------+-------+%s\n", T_DARK, T_END);
-        for(i = 0; i < (page * MAX_PAGESIZE) && input[i] != '\0'; i++){
+        for(pos = 0; pos < (page * MAX_PAGESIZE) && input[pos] != '\0'; pos++){
             printf(" %s|[%10d] | %-10p | %-4d | %-6s|%s"
                 , T_DARK
-                , i
-                , (void*)&input[i]
-                , input[i]
-                , (input[i] == '\n' ? T_CHAR_CR "     " : (char[]){ input[i], '\0' })
+                , pos
+                , (void*)&input[pos]
+                , input[pos]
+                , (input[pos] == '\n' ? T_CHAR_CR "     " : (char[]){ input[pos], '\0' })
                 , T_END
             );
-            if(i == (page * MAX_PAGESIZE) - 1){ 
+            if(pos == (page * MAX_PAGESIZE) - 1){ 
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
                 while((t = getchar()) != '\n') 
@@ -124,10 +124,16 @@ void display(char choice){
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
         printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
         printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
-        for(unsigned short r = 0; token[r][2] != '\0'; r++){
-            printf(" %s|[%10d] | ", T_DARK, token[r][0]);
-            for(unsigned short i = token[r][1]; i < (token[r][1] + token[r][2]); i++){ printf("%c", input[i]); }
-            for(unsigned short i = 0; i < (30 - token[r][2]); i++){ printf(" "); } printf("|%s\n", T_END);
+        for(pos = 0; pos < (page * MAX_PAGESIZE) && token[pos][2] != '\0'; pos++){
+            printf(" %s|[%10d] | ", T_DARK, token[pos][0]);
+            for(unsigned short i = token[pos][1]; i < (token[pos][1] + token[pos][2]); i++){ printf("%c", input[i]); }
+            for(unsigned short i = 0; i < (30 - token[pos][2]); i++){ printf(" "); } printf("|%s", T_END);
+            if(pos == (page * MAX_PAGESIZE) - 1){ 
+                printf(" press '+' & ENTER for more.. ");
+                unsigned char t;
+                while((t = getchar()) != '\n') 
+                    if(t == '+'){ page++; printf("\r%s%s%s%s\r", T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN);} else break;
+            }else printf("\n");
         }
         printf(" %s+-------------+-------------------------------+%s\n\n", T_DARK, T_END);
     }else if(choice == DISPLAY_STATS){
