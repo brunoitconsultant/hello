@@ -6,7 +6,7 @@ git clone https://github.com/brunoitconsultant/words.git ~/words ; cd ~/words
 clear ; make clean ; make -s ; ./words
 
 ### > DEBUG CODE (using GDB)
-#### 0. Demo
+#### 0. Demos
 - ***Youtube***: https://www.youtube.com/watch?v=svG6OPyKsrw
 - ***Youtube***: https://www.youtube.com/watch?v=-n9Fkq1e6sg
 - ***Youtube***: https://www.youtube.com/watch?v=PorfLSr3DDI
