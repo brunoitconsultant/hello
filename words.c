@@ -73,10 +73,7 @@ void write(char method){
     else if (method == APPEND)  while(input[i] != '\0') i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
     
-    while((c = getchar()) != EOF){
-        input[i] = c;
-        i++;
-    }
+    while((c = getchar()) != EOF) if((i + 1) < MAX_CHARS) input[i++] = c;
     input[i] = '\0';
     clearerr(stdin);
 }
