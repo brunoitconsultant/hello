@@ -101,7 +101,8 @@ void tokenize(){
 
 void atoi(){ 
     unsigned atoi = 0;
-    for(unsigned int i = 0; input[i] != '\0' && (input[i] >= '0' && input[i] <= '9'); i++) atoi = (10 * atoi) + (input[i] - '0');
+    for(unsigned int i = 0; input[i] != '\0'; i++)
+        if(input[i] >= '0' && input[i] <= '9') atoi = (10 * atoi) + (input[i] - '0');
     printf("_________atoi: %d\n", atoi);
 }
 
