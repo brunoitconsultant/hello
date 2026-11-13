@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define MAX_CHARS       INT_MAX     //2.1 Gb
+#define MAX_CHARS       10//INT_MAX     //2.1 Gb
 #define MAX_WORDS       320'000'000 
 #define MAX_PAGESIZE    50 
 #define T_CYAN          "\033[44m\033[37m"
@@ -41,11 +41,11 @@ void menu(){
     printf(" %s|  %c. Write new                               |%s\n",   T_CYAN, INSERT,         T_END  );
     printf(" %s|  %c. Append                                  |%s\n",   T_CYAN, APPEND,         T_END  );
     printf(" %s|  %c. Tokenize                                |%s\n",   T_CYAN, TOKENIZE,       T_END  );
-    printf(" %s|                                             |%s\n",    T_CYAN,                 T_END  );
+    printf(" %s|  -------------------------------------------|%s\n",    T_CYAN,                 T_END  );
     printf(" %s|  %c. Display Statistics                      |%s\n",   T_CYAN, DISPLAY_STATS,  T_END  );
     printf(" %s|  %c. Display Input                           |%s\n",   T_CYAN, DISPLAY_INPUT,  T_END  );
     printf(" %s|  %c. Display Tokens                          |%s\n",   T_CYAN, DISPLAY_TOKENS, T_END  );
-    printf(" %s|                                             |%s\n",    T_CYAN,                 T_END  );
+    printf(" %s|  -------------------------------------------|%s\n",    T_CYAN,                 T_END  );
     printf(" %s|  %c  Exit                                    |%s\n",   T_CYAN, EXIT,           T_END  );
     printf(" %s+---------------------------------------------+%s\n\n",  T_CYAN,                 T_END  );
     while((t = getchar()) != '\n') { choice = t; printf("%s",           T_BACKSPACE); }
@@ -72,7 +72,7 @@ void write(char method){
     if      (method == INSERT)  ;
     else if (method == APPEND)  while(input[i] != '\0') i++;
     else                        { printf(" \"%d\", is an invalid write method\n", method); return; }
-
+    
     while((c = getchar()) != EOF){
         input[i] = c;
         i++;
