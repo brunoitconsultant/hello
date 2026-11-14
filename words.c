@@ -17,11 +17,12 @@
 void write(char method);
 void tokenize();
 void atoi();
+unsigned int djb2(unsigned int position, unsigned short length);
 void display(char choice);
 
 static char choice;
 static unsigned char input[MAX_CHARS]   = { '\0' };
-unsigned short token[MAX_WORDS][3]      = { { '\0' } };
+unsigned int token[MAX_WORDS][4]      = { { '\0' } };
 
 enum choices { 
     INSERT              = '1'
@@ -94,16 +95,22 @@ void tokenize(){
                 id++;
             }else break;
         }else if ((chr >= 'A' && chr <= 'Z') || (chr >= 'a' && chr <= 'z')) token[id-1][2]++;
+        else token[id-1][3] = djb2(token[id-1][1], token[id-1][2]);
         prev = chr;
     }
     token[id][2] = '\0';
 }
 
 void atoi(){ 
-    unsigned atoi = 0;
+    unsigned int atoi = 0;
     for(unsigned int i = 0; input[i] != '\0'; i++)
         if(input[i] >= '0' && input[i] <= '9') atoi = (10 * atoi) + (input[i] - '0');
-    printf("_________atoi: %d\n", atoi);
+}
+
+unsigned int djb2(unsigned int position, unsigned short length){
+    unsigned int hash = 5381;
+    for(unsigned int i = position; i < (position + length); i++) hash = ((hash << 5) + hash) + input[i];
+    return hash;
 }
 
 void display(char choice){
@@ -132,13 +139,14 @@ void display(char choice){
         printf(" %s+-------------+----------------+------+-------+%s\n\n", T_DARK, T_END);
     }else if(choice == DISPLAY_TOKENS){
         tokenize();
-        printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
-        printf(" %s| token[n]    | data                          |%s\n", T_DARK, T_END);
-        printf(" %s+-------------+-------------------------------+%s\n", T_DARK, T_END);
+        printf(" %s+-------------+------------------+------------+%s\n", T_DARK, T_END);
+        printf(" %s| token[n]    | value            | hash[djb2] |%s\n", T_DARK, T_END);
+        printf(" %s+-------------+------------------+------------+%s\n", T_DARK, T_END);
         for(pos = 0; pos < (page * MAX_PAGESIZE) && token[pos][2] != '\0'; pos++){
             printf(" %s|[%10d] | ", T_DARK, token[pos][0]);
             for(unsigned short i = token[pos][1]; i < (token[pos][1] + token[pos][2]); i++){ printf("%c", input[i]); }
-            for(unsigned short i = 0; i < (30 - token[pos][2]); i++){ printf(" "); } printf("|%s", T_END);
+            for(unsigned short i = 0; i < (17 - token[pos][2]); i++){ printf(" "); } printf("|%s", T_END);
+            printf(" %s%-10u |", T_DARK, token[pos][3]);
             if(pos == (page * MAX_PAGESIZE) - 1){ 
                 printf(" press '+' & ENTER for more.. ");
                 unsigned char t;
@@ -146,7 +154,7 @@ void display(char choice){
                     if(t == '+'){ page++; printf("\r%s%s%s%s\r", T_UP, T_HORIZ_ABS, T_ERASE_LINE, T_DOWN);} else break;
             }else printf("\n");
         }
-        printf(" %s+-------------+-------------------------------+%s\n\n", T_DARK, T_END);
+        printf(" %s+-------------+------------------+------------+%s\n\n", T_DARK, T_END);
     }else if(choice == DISPLAY_STATS){
         unsigned int rows = 0, words = 0, chars;
         unsigned char chr, prev = '\0';
